@@ -19,6 +19,7 @@ import Docxtemplater from 'docxtemplater';
 import plantilla from '../../assets/ti.docx'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/system/Box';
+const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL;
 
 
 const DataPerIndex = () => {
@@ -29,7 +30,7 @@ const DataPerIndex = () => {
     const outerTheme = useTheme();
 
     useEffect(() => {
-        axios.get('http://localhost:3000/data/all')
+        axios.get(apiUrl)
             .then(response => {
                 const responseData = Array.isArray(response.data) ? response.data.reverse() : [response.data];
                 setData(responseData);

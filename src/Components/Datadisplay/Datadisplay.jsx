@@ -25,9 +25,10 @@ const Datadisplay = () => {
     const [currentIndex, setLastIndex] = useState(null);
     const navigate = useNavigate();
     const outerTheme = useTheme();
+    const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL;
 
     useEffect(() => {
-        axios.get('http://localhost:3000/data/all')
+        axios.get(apiUrl)
             .then(response => {
                 const responseData = Array.isArray(response.data) ? response.data.reverse() : [response.data];
                 setData(responseData);

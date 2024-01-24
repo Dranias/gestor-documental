@@ -40,13 +40,15 @@ const UpdateData = () => {
     const [textareaError, setTextareaError] = useState(false);
     const [errorSnackbarOpen, setErrorSnackbarOpen] = React.useState(false);
     const [openDialogs, setOpenDialog] = React.useState(false);
+    const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_PATCH;
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/data/${id}`);
+                const fullUrl = `${apiUrl}/${id}`;
+                const response = await fetch(fullUrl);
                 if (!response.ok) {
                     throw new Error(`Error fetching data: ${response.statusText}`);
                 }

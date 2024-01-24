@@ -42,6 +42,7 @@ const Data = () => {
   const [openDialogs, setOpenDialog] = React.useState(false);
   const [textareaError, setTextareaError] = useState(false);
   const [isTemaValid, setIsTemaValid] = useState(true);
+  const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_POST;
 
   const navigate = useNavigate();
   let contador = 0;
@@ -264,7 +265,7 @@ const Data = () => {
       time: timeValue,
     };
 
-    axios.post('http://localhost:3000/data', newData)
+    axios.post(apiUrl, newData)
       .then(response => {
         console.log('Respuesta del servidor:', response.data);
         openDialog();

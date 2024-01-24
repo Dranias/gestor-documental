@@ -1,3 +1,4 @@
+import './Navbar.css';
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -6,25 +7,27 @@ import { useSearch } from '../../SearchContext';
 
 import search_icon_light from '../../assets/search-w.png';
 import gobierno_presente from '../../assets/gobierno-presente.jpg';
-import Search from '../Search/Search';
-
-import './Navbar.css';
 import axios from 'axios';
+
+const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_SEARCH;
+const apiUrlHome = import.meta.env.VITE_REACT_APP_GESTOR_APP_HOME;
+
 
 
 const Navbar = () => {
-
+    
     const { setSearchResults } = useSearch();
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(null);
 
     const goToMain = () => {
-        navigate(`http://localhost:5173`);
+        navigate(apiUrlHome);
     };
 
     const handleSearch = async (query) => {
         try {
-            const response = await axios.get(`http://localhost:3000/data/search?query=${query}`);
+            const fullUrl = `${apiUrl}/?query=${query}`;
+            const response = await axios.get(fullUrl);
             const searchData = response.data;
             setSearchResults(searchData);
             setCurrentIndex(null);

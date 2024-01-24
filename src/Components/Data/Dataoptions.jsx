@@ -175,6 +175,7 @@ export const temas = [
   { label: 'Deporte' },
   { label: 'Deportes' },
   { label: 'Deportivo' },
+  { label: 'Derecho de Preferencia' },
   { label: 'Derechos Humanos' },
   { label: 'Desabasto de agua' },
   { label: 'Desabasto de agua potable' },
