@@ -30,6 +30,7 @@ const DataPerIndex = () => {
     const outerTheme = useTheme();
 
     useEffect(() => {
+        console.log("Esta es la URL: ", apiUrl);
         axios.get(apiUrl)
             .then(response => {
                 const responseData = Array.isArray(response.data) ? response.data.reverse() : [response.data];
