@@ -1,7 +1,7 @@
 import './UpdateData.css';
 
 import React, { useEffect, useState } from 'react';
-import { json, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { RotatingLines } from 'react-loader-spinner';
 import { temas, dependencias, customTheme } from '../Data/Dataoptions';
 import { TextField, Grid, Button } from '@mui/material';
@@ -35,15 +35,16 @@ const UpdateData = () => {
     const [textareaContent, setTextareaContent] = useState('');
     const [textarealegal, setTextarealegal] = useState('');
     const [textareaObs, setTextareaObs] = useState('');
-    const [formats, setFormats] = React.useState(() => []);
     const [alignment, setAlignment] = React.useState('left');
     const [textareaError, setTextareaError] = useState(false);
     const [errorSnackbarOpen, setErrorSnackbarOpen] = React.useState(false);
     const [openDialogs, setOpenDialog] = React.useState(false);
-    const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_PATCH;
-    const apiGetbyId = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_BYID;
+    const [opgId, setOpgId] = useState('');
 
     const navigate = useNavigate();
+
+    const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_PATCH;
+    const apiGetbyId = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_BYID;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,7 +55,6 @@ const UpdateData = () => {
                     throw new Error(`Error fetching data: ${response.statusText}`);
                 }
                 const jsonData = await response.json();
-                console.log('Datos recuperados:', jsonData);
                 setData(jsonData.data);
                 setFolioValue(jsonData.data.folio);
                 settimeValue(jsonData.data.time);
@@ -64,13 +64,10 @@ const UpdateData = () => {
                 setTextareaContent(jsonData.data.description);
                 setTextarealegal(jsonData.data.legalBasis || "");
                 setTextareaObs(jsonData.data.notes || "");
-
-                console.log("Valor real de textareaObs:", jsonData.data.textareaObs, typeof jsonData.data.textareaObs);
+                setOpgId(jsonData.data.id);
 
                 // Iterar sobre data.docNumber y data.institution
                 jsonData.data.docNumber.forEach((num, index) => {
-                    console.log("Numero: ", num, " index: ", index);
-
                     setOPGs(prevOPGs => {
                         const updatedOPGs = [...prevOPGs];
                         if (index >= updatedOPGs.length) {
@@ -90,8 +87,6 @@ const UpdateData = () => {
                 });
 
                 jsonData.data.institution.forEach((institution, index) => {
-                    console.log("Dep: ", institution, " index: ", index);
-
                     setDependenciesarray(prevdependenciesarray => {
                         const updateddependenciesarray = [...prevdependenciesarray];
                         if (index >= updateddependenciesarray.length) {
@@ -140,7 +135,6 @@ const UpdateData = () => {
     }
 
     const handleOpgChange = (index, value) => {
-        console.log('Nuevo valor de OPG:', value);
         setOPGs(prevOPGs => {
             const updatedOPGs = [...prevOPGs];
             if (index >= updatedOPGs.length) {
@@ -159,7 +153,6 @@ const UpdateData = () => {
     };
 
     const handleDependenciaChange = (index, value) => {
-        console.log('Nuevo valor de dependencia:', value);
         setDependenciesarray(prevdependenciesarray => {
             const updateddependenciesarray = [...prevdependenciesarray];
             if (index >= updateddependenciesarray.length) {
@@ -234,11 +227,12 @@ const UpdateData = () => {
             time: timeValue,
         };
 
+        console.log("Id", opgId);
         axios.patch(fullUrl, updatedData)
             .then(response => {
                 console.log('Respuesta del servidor:', response.data);
                 openDialog();
-                navigate(`/datadisplay`);
+                navigate(`/dataperindex/${opgId}/dataupdate`);
             })
             .catch(error => {
                 console.error('Error al enviar los datos:', error);
@@ -483,7 +477,7 @@ const UpdateData = () => {
 
                 <div className="footer" style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button className="button" onClick={handleSendData}>
+                        <Button className="button" color="inherit" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
                             Modificar
                         </Button>
                     </div>

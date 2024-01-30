@@ -19,7 +19,8 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #D6D1C4;
+  background: rgb(195, 185, 159);
+  background: linear-gradient(90deg, rgba(195, 185, 159, 1) 0%, rgba(205, 194, 165, 1) 48%, rgba(181, 167, 132, 1) 100%);
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -40,4 +41,38 @@
 
 .footer button:last-child {
   margin-right: 0;
+}
+
+.loader {
+  width: 200px;
+  height: 200px;
+  display: grid;
+  color: #691C32;
+  background:
+    linear-gradient(currentColor 0 0) top/100% 2px,
+    radial-gradient(farthest-side at top, #0000 calc(100% - 2px), currentColor calc(100% - 1px), #0000) top,
+    linear-gradient(currentColor 0 0) bottom/100% 2px,
+    radial-gradient(farthest-side at bottom, #0000 calc(100% - 2px), currentColor calc(100% - 1px), #0000) bottom;
+  background-size: 100% 1px, 100% 50%;
+  background-repeat: no-repeat;
+  animation: l18 4s infinite linear;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  border: inherit;
+  animation: inherit;
+}
+
+.loader::after {
+  animation-duration: 2s;
+}
+
+@keyframes l18 {
+  100% {
+    transform: rotate(1turn)
+  }
 }

@@ -21,7 +21,7 @@ const Navbar = () => {
     const [currentIndex, setCurrentIndex] = useState(null);
 
     const goToMain = () => {
-        navigate(apiUrlHome);
+        navigate('/');
     };
 
     const handleSearch = async (query) => {

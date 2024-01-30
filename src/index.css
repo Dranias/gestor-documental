@@ -1,12 +1,15 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
+    
 }
-.container{
+
+.container {
     width: 100vw;
     min-width: 100vh;
-    background: #d6d1C4;
+    background: rgb(175, 170, 157);
+    background: linear-gradient(90deg, rgba(175, 170, 157, 1) 0%, rgba(201, 187, 150, 1) 48%, rgba(219, 196, 135, 1) 100%);
     transition: 0.5s;
 }

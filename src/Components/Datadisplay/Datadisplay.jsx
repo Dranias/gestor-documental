@@ -18,6 +18,7 @@ import TextField from '@mui/material/TextField';
 import notfound from '../../assets/product-not-found.png';
 import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
+import Tooltip from '@mui/material/Tooltip';
 
 const Datadisplay = () => {
 
@@ -355,18 +356,27 @@ const Datadisplay = () => {
                 )}
                 <div className="footer" style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button style={{ width: '70px', height: '70px' }} onClick={handlePrevClick}>
-                            <img src={flechaizq} alt="Flecha izquierda" style={{ height: '70%' }} />
-                        </button>
-                        <button style={{ width: '70px', height: '70px' }} onClick={updateData}>
-                            <img src={editar} alt="Editar" style={{ height: '70%' }} />
-                        </button >
-                        <button style={{ width: '70px', height: '70px' }} onClick={handleDownloadFile}>
-                            <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
-                        </button>
-                        <button style={{ width: '70px', height: '70px' }} onClick={handleFowardClick}>
-                            <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
-                        </button>
+                        <Tooltip title="Anterior">
+                            <button style={{ width: '70px', height: '70px' }} onClick={handlePrevClick}>
+                                {/*display: direction === 'dataupdate' ? 'none' : 'block'*/}
+                                <img src={flechaizq} alt="Flecha izquierda" style={{ height: '70%' }} />
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="Actualizar">
+                            <button style={{ width: '70px', height: '70px' }} onClick={updateData}>
+                                <img src={editar} alt="Editar" style={{ height: '70%' }} />
+                            </button >
+                        </Tooltip>
+                        <Tooltip title="Imprimir ficha">
+                            <button style={{ width: '70px', height: '70px' }} onClick={handleDownloadFile}>
+                                <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="Siguente">
+                            <button style={{ width: '70px', height: '70px' }} onClick={handleFowardClick}>
+                                <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
+                            </button>
+                        </Tooltip>
                     </div>
                 </div>
             </ThemeProvider>

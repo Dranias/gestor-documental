@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { customTheme } from './DataPerIndexoptions';
-import { RotatingLines } from 'react-loader-spinner';
 
 import flechaDer from '../../assets/f-der.png';
 import flechaizq from '../../assets/f-izq.png';
@@ -19,6 +18,8 @@ import Docxtemplater from 'docxtemplater';
 import plantilla from '../../assets/ti.docx'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/system/Box';
+import Tooltip from '@mui/material/Tooltip';
+
 const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL;
 
 
@@ -42,7 +43,7 @@ const DataPerIndex = () => {
 
     useEffect(() => {
         const index = data.findIndex(item => item.id === id);
-
+        console.log("index: ", index)
         if (direction === 'previous') {
             if (index !== -1 && index > 0) {
                 setCurrentIndex(index - 1);
@@ -58,23 +59,25 @@ const DataPerIndex = () => {
                 setCurrentIndex(null);
             }
         }
+        if (direction === 'dataupdate') {
+            if (index !== -1 && index > 0) {
+                console.log("Vengo de dataupdate: ", index)
+                console.log("index: ", index)
+                setCurrentIndex(index !== -1 ? index : null);
+            }
+        }
     }, [data, id]);
 
     if (currentIndex === null || currentIndex === -1) {
-        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '' }}>
             <div>
-                <p>Regresé a REGISTROS, por favor.</p>
-                <RotatingLines
-                    visible={true}
-                    height="96"
-                    width="96"
-                    color="grey"
-                    strokeWidth="5"
-                    animationDuration="0.75"
-                    ariaLabel="rotating-lines-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                />
+                <br />
+                <p>No hay más elementos previos.</p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div className="loader"></div>
             </div>
         </div>
     }
@@ -128,7 +131,7 @@ const DataPerIndex = () => {
                     : `OPG/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
 
                 FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
-                
+
                 OBSERVACIONES: data[currentIndex].notes ? `OBSERVACIONES\r\n${data[currentIndex].notes}` : '',
             });
 
@@ -394,18 +397,27 @@ const DataPerIndex = () => {
                 )}
                 <div className="footer" style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button style={{ width: '70px', height: '70px' }} onClick={handlePrevClick}>
-                            <img src={flechaizq} alt="Flecha izquierda" style={{ height: '70%' }} />
-                        </button>
-                        <button style={{ width: '70px', height: '70px' }} onClick={updateData}>
-                            <img src={editar} alt="Editar" style={{ height: '70%' }} />
-                        </button >
-                        <button style={{ width: '70px', height: '70px' }} onClick={handleDownloadFile}>
-                            <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
-                        </button>
-                        <button style={{ width: '70px', height: '70px' }} onClick={handleFowardClick}>
-                            <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
-                        </button>
+                        <Tooltip title="Anterior">
+                            <button style={{ width: '70px', height: '70px' }} onClick={handlePrevClick}>
+                                {/*display: direction === 'dataupdate' ? 'none' : 'block'*/}
+                                <img src={flechaizq} alt="Flecha izquierda" style={{ height: '70%' }} />
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="Actualizar">
+                            <button style={{ width: '70px', height: '70px' }} onClick={updateData}>
+                                <img src={editar} alt="Editar" style={{ height: '70%' }} />
+                            </button >
+                        </Tooltip>
+                        <Tooltip title="Imprimir ficha">
+                            <button style={{ width: '70px', height: '70px' }} onClick={handleDownloadFile}>
+                                <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="Siguente">
+                            <button style={{ width: '70px', height: '70px' }} onClick={handleFowardClick}>
+                                <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
+                            </button>
+                        </Tooltip>
                     </div>
                 </div>
             </ThemeProvider>

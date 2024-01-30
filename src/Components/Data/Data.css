@@ -6,7 +6,8 @@
 }
 
 body {
-    background-color: #D6D1C4;
+    background: rgb(175, 170, 157);
+    background: linear-gradient(90deg, rgba(175, 170, 157, 1) 0%, rgba(201, 187, 150, 1) 48%, rgba(219, 196, 135, 1) 100%);
     margin: 0;
     padding: 0;
 }
@@ -76,7 +77,7 @@ body {
 .accordion-container {
     margin-top: 20px;
     position: relative;
-    z-index: 1;  /* Asegúrate de que el valor sea menor que el del footer */
+    z-index: 1; 
 }
 
 .text-containers {
