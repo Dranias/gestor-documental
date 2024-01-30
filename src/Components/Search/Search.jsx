@@ -105,9 +105,9 @@ const Search = () => {
                 DEPENDENCIA: Array.isArray(data[currentIndex].docNumber)
                     ? data[currentIndex].docNumber.map((doc, index) => `OPG/${doc}/2024: ${data[currentIndex].institution[index]}`).join('\n')
                     : `OPG/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
-                FUNDAMENTO: data[currentIndex].legalBasis ? `III. FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
+                FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
                 // OBSERVACIONES si no está vacío
-                OBSERVACIONES: data[currentIndex].textareaObs ? `IV. OBSERVACIONES\r\n${data[currentIndex].textareaObs}` : '',
+                OBSERVACIONES: data[currentIndex].notes ? `OBSERVACIONES\r\n${data[currentIndex].notes}` : '',
             });
 
             try {

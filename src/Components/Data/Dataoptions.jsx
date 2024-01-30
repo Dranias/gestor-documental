@@ -461,6 +461,7 @@ export const temas = [
   { label: 'Tema de solicitud de gratuidad' },
   { label: 'Tema laboral' },
   { label: 'Tema municipal' },
+  { label: 'Trámites gubernamentales' },
   { label: 'Temas de Ayuntamiento' },
   { label: 'Titulación' },
   { label: 'Títulos de propiedad' },
@@ -511,8 +512,8 @@ export const dependencias = [
   { label: 'Dirección General del Sistema Operador de los Servicios de Agua Potable y Alcantarillado de Puebla' },
   { label: 'Dirección General del Sistema para el Desarrollo Integral de la Familia del Estado de Puebla' },
   { label: 'Dirección Local de la Comisión Nacional del Agua' },
-  { label: 'Director General del Sistema Operador de los Servicios de Agua Potable y Alcantarillado de Puebla' },
   { label: 'Encargado de Despacho de la Dirección General del Sistema para el Desarrollo Integral de la Familia del Estado de Puebla' },
+  { label: 'Fiscalía General del Estado' },
   { label: 'Honorable Ayuntamiento de Acajete' },
   { label: 'Honorable Ayuntamiento de Acatzingo' },
   { label: 'Honorable Ayuntamiento de Acteopan' },
@@ -609,6 +610,7 @@ export const dependencias = [
   { label: 'Dirección General del Centro de SCT Puebla' },
   { label: 'Secretaría Ejecutiva del Consejo Estatal de Coordinación del Sistema Nacional de Seguridad Pública' },
   { label: 'Coordinación General de Órganos de Vigilancia y Control de la Secretaría de la Función Pública' },
+  { label: 'Sin trámite' },
   { label: 'Delegación del Registro Agrario Nacional en Puebla' }
 ];
 
@@ -633,6 +635,11 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => 
 export const customTheme = (outerTheme) =>
   createTheme({
     palette: {
+      primary: {
+        main: '#d6d1C4',
+        nofocus: '#cfcbc2',
+        dark: '#c7bb9b',
+      },
       mode: outerTheme.palette.mode,
     },
     components: {

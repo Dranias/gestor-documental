@@ -53,22 +53,20 @@ const Data = () => {
     contador++;
     const newSection = (
       <div className='container-opg' key={sections.length}>
-        <h1>OPG/</h1>
         <TextField
           id={`outlined-basic-${sections.length}`}
           label="OPG"
           variant="outlined"
-          style={{ width: '5%' }}
+          style={{ width: '10%' }}
           onChange={(e) => handleOpgChange(contador, e.target.value)}
         />
-        <h1>/2024</h1>
         <div style={{ display: 'flex', alignItems: 'center', width: '800px' }}>
           <Autocomplete
             disablePortal
             id="combo-box-demo"
             options={dependencias}
             freeSolo
-            sx={{ width: "100%" }}
+            sx={{ width: "150%" }}
             renderInput={(params) => <TextField {...params} label="Dependencia de Turno" />}
             onChange={(event, newValue) => {
               setSelectedInstitution(newValue); // Cambiar el valor seleccionado
@@ -93,20 +91,18 @@ const Data = () => {
   const [sections, setSections] = useState([
     (
       <div className='container-opg' key={0}>
-        <h1>OPG/</h1>
         <TextField
           id={`outlined-basic-${0}`}
           label="OPG"
           variant="outlined"
           style={{
-            width: '5%',
+            width: '10%',
           }}
           onChange={(e) => {
             handleOpgChange(contador, e.target.value);
           }}
         />
-        <h1>/2024</h1>
-        <div style={{ display: 'flex', alignItems: 'center', width: '800px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', width: '80%' }}>
           <Autocomplete
             disablePortal
             id="combo-box-demo"
@@ -168,19 +164,9 @@ const Data = () => {
     });
   };
 
-  const [alignment, setAlignment] = React.useState('left');
-  const [formats, setFormats] = React.useState(() => []);
   const [textareaContent, setTextareaContent] = useState('');
   const [textarealegal, setTextarealegal] = useState('');
   const [textareaObs, setTextareaObs] = useState('');
-
-  const handleFormat = (event, newFormats) => {
-    setFormats(newFormats);
-  };
-
-  const handleAlignment = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -293,126 +279,200 @@ const Data = () => {
           <div className="content-container">
             <Grid container className='grid' >
               <Grid item>
-                <TextField
-                  id="outlined-basic"
-                  label="Folio"
-                  variant="outlined"
-                  value={folioValue}
-                  onChange={(e) => setFolioValue(e.target.value)}
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  id="outlined-basic"
-                  label="Hora"
-                  variant="outlined"
-                  value={timeValue}
-                  onChange={(e) => settimeValue(e.target.value)} />
-              </Grid>
-              <Grid item>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={['DatePicker']}>
-                    <DatePicker
-                      label="Fecha (MM/DD/AAAA)"
-                      value={selectedDate}
-                      onChange={(newValue) => setSelectedDate(newValue)}
-                      slotProps={{ textField: { variant: 'outlined' } }}
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
-              </Grid>
-              <Grid item>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={temas}
-                  freeSolo
-                  sx={{ width: 300 }}
-                  renderInput={(params) =>
-                    <TextField
-                      {...params}
-                      label="Tema"
-                      error={!isTemaValid}
-                      helperText={!isTemaValid ? 'El tema no puede estar vacío' : ''}
-                    />
-                  }
-                  onChange={(event, newValue) => {
-                    setSelectedissue(newValue);
-                    setIsTemaValid(true);
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
                   }}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      handleConfirmIssue();
+                >
+                  <TextField
+                    id="outlined-basic"
+                    label="Folio"
+                    variant="outlined"
+                    value={folioValue}
+                    onChange={(e) => setFolioValue(e.target.value)}
+                  />
+                </Box>
+              </Grid>
+
+              <Grid item>
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  }}
+                >
+                  <TextField
+                    id="outlined-basic"
+                    label="Hora"
+                    variant="outlined"
+                    value={timeValue}
+                    onChange={(e) => settimeValue(e.target.value)} />
+                </Box>
+              </Grid>
+
+              <Grid item>
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  }}
+                >
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker
+                        label="Fecha (MM/DD/AAAA)"
+                        value={selectedDate}
+                        onChange={(newValue) => setSelectedDate(newValue)}
+                        slotProps={{ textField: { variant: 'outlined' } }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </Box>
+              </Grid>
+
+              <Grid item>
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  }}
+                >
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={temas}
+                    freeSolo
+                    sx={{ width: 300 }}
+                    renderInput={(params) =>
+                      <TextField
+                        {...params}
+                        label="Tema"
+                        error={!isTemaValid}
+                        helperText={!isTemaValid ? 'El tema no puede estar vacío' : ''}
+                      />
                     }
-                  }}
-                />
+                    onChange={(event, newValue) => {
+                      setSelectedissue(newValue);
+                      setIsTemaValid(true);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        handleConfirmIssue();
+                      }
+                    }}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </div>
 
           <div className="container-name" style={{ width: '75%' }}>
-            <TextField
-              id="outlined-basic"
-              label="Nombre y/o cargo"
-              variant="filled"
-              style={{
-                width: "100%",
-                borderColor: textareaError ? 'red' : '#ccc', // Cambiar el color del borde en caso de error
+            <Box component="section"
+              sx={{
+                p: 2, border: 1,
+                bgcolor: 'primary.nofocus',
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
               }}
-              value={nameValue}
-              onChange={(e) => {
-                setNameValue(e.target.value);
-                setTextareaError(false); // Limpiar el estado de error al cambiar el contenido
-              }}
-              spellCheck="true"
-            />
-            {textareaError && (
-              <div style={{ color: 'red', marginLeft: '10px' }}>
-                Este campo no puede estar vacío.
-              </div>
-            )}
-          </div>
-          <br />
-
-          <div style={{ width: '95%', marginLeft: '90px' }} >
-            {sections.map((section, index) => (
-              <React.Fragment key={index}>
-                {React.cloneElement(section)}
-              </React.Fragment>
-            ))}
-            <br />
-          </div>
-
-          <br />
-          <Box className="text-containers" style={{ width: '80%' }}>
-            <div className="container-issue">
-              <Typography variant="h6" style={{ color: '#691C32', marginLeft: '20px' }}>
-                Asunto:
-              </Typography>
-
-              <TextareaAutosize
-                value={textareaContent}
-                onChange={(e) => {
-                  setTextareaContent(e.target.value);
-                  setTextareaError(false);
-                }}
+            >
+              <TextField
+                id="outlined-basic"
+                label="Nombre y/o cargo"
+                variant="filled"
                 style={{
-                  width: '95%',
-                  minHeight: '15%',
-                  border: '3px solid #9e2f5f',
-                  borderRadius: '10px',
-                  padding: '8px',
-                  marginTop: '10px',
-                  marginLeft: '10px',
-                  fontSize: '20px',
+                  width: "100%",
                   borderColor: textareaError ? 'red' : '#ccc', // Cambiar el color del borde en caso de error
                 }}
+                value={nameValue}
+                onChange={(e) => {
+                  setNameValue(e.target.value);
+                  setTextareaError(false); // Limpiar el estado de error al cambiar el contenido
+                }}
+                spellCheck="true"
               />
               {textareaError && (
                 <div style={{ color: 'red', marginLeft: '10px' }}>
                   Este campo no puede estar vacío.
                 </div>
               )}
+            </Box>
+          </div>
+
+          <br />
+
+          <div style={{ width: '75%', marginLeft: '235px' }} >
+            <Box component="section"
+              sx={{
+                p: 2, border: 1,
+                bgcolor: 'primary.nofocus',
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
+              }}
+            >
+              {sections.map((section, index) => (
+                <React.Fragment key={index}>
+                  {React.cloneElement(section)}
+                </React.Fragment>
+              ))}
+              <br />
+            </Box>
+          </div>
+
+          <br />
+          <Box className="text-containers" style={{ width: '100%' }}>
+            <div className="container-issue">
+              <Box component="section"
+                sx={{
+                  p: 2, border: 1,
+                  bgcolor: 'primary.nofocus',
+                  '&:hover': {
+                    bgcolor: 'primary.dark',
+                  },
+                }}
+              >
+                <Typography variant="h6" style={{ color: '#691C32', marginLeft: '20px' }}>
+                  Asunto:
+                </Typography>
+
+                <TextareaAutosize
+                  value={textareaContent}
+                  onChange={(e) => {
+                    setTextareaContent(e.target.value);
+                    setTextareaError(false);
+                  }}
+                  style={{
+                    width: '95%',
+                    minHeight: '15%',
+                    border: '3px solid #9e2f5f',
+                    borderRadius: '10px',
+                    padding: '8px',
+                    marginTop: '10px',
+                    marginLeft: '10px',
+                    fontSize: '20px',
+                    borderColor: textareaError ? 'red' : '#ccc', // Cambiar el color del borde en caso de error
+                  }}
+                />
+                {textareaError && (
+                  <div style={{ color: 'red', marginLeft: '10px' }}>
+                    Este campo no puede estar vacío.
+                  </div>
+                )}
+              </Box>
             </div>
 
 
@@ -479,8 +539,8 @@ const Data = () => {
 
         <div className="footer" style={{ marginTop: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button className="button" onClick={handleSendData}>
-              Enviar
+            <Button className="button" color="inherit" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
+              Registrar
             </Button>
           </div>
         </div>

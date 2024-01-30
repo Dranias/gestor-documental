@@ -41,13 +41,14 @@ const UpdateData = () => {
     const [errorSnackbarOpen, setErrorSnackbarOpen] = React.useState(false);
     const [openDialogs, setOpenDialog] = React.useState(false);
     const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_PATCH;
+    const apiGetbyId = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_BYID;
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const fullUrl = `${apiUrl}/${id}`;
+                const fullUrl = `${apiGetbyId}/${id}`;
                 const response = await fetch(fullUrl);
                 if (!response.ok) {
                     throw new Error(`Error fetching data: ${response.statusText}`);
@@ -62,7 +63,9 @@ const UpdateData = () => {
                 setNameValue(jsonData.data.name);
                 setTextareaContent(jsonData.data.description);
                 setTextarealegal(jsonData.data.legalBasis || "");
-                setTextareaObs(jsonData.data.textareaObs || "");
+                setTextareaObs(jsonData.data.notes || "");
+
+                console.log("Valor real de textareaObs:", jsonData.data.textareaObs, typeof jsonData.data.textareaObs);
 
                 // Iterar sobre data.docNumber y data.institution
                 jsonData.data.docNumber.forEach((num, index) => {
@@ -178,32 +181,26 @@ const UpdateData = () => {
         const cantidadElementos = arraytoDelete.length;
         let contador = 0;
         let contenidoObjeto = [];
-        console.log(`El array dependenciesarray tiene ${cantidadElementos} elementos:`);
 
         if (cantidadElementos > 0) {
-            console.log('Elementos:');
             arraytoDelete.forEach((element, index) => {
                 if (typeof element === 'object' && element !== null && element.hasOwnProperty('label')) {
-                    console.log(`[${index + 1}] Objeto: ${JSON.stringify(element)}`);
-
                     const { label } = element;
                     const nombre = label.replace(/.*?"/g, ''); // Eliminar todo antes de las comillas dobles
                     contenidoObjeto[contador] = nombre;
                 } else {
-                    console.log(`[${index + 1}] ${element}`);
                     contenidoObjeto[contador] = element;
                 }
                 contador++;
             });
-
-            console.log("Array: ", contenidoObjeto);
         } else {
-            console.log('El array dependenciesarray está vacío.');
         }
         return contenidoObjeto;
     };
 
     const handleSendData = () => {
+
+        const fullUrl = `${apiUrl}/${id}`;
 
         if (!nameValue.trim() || !textareaContent.trim() || dependenciesarray.some(dep => (dep && typeof dep === 'object' ? !dep.label.trim() : !dep.trim()))) {
             setErrorSnackbarOpen(true);
@@ -237,13 +234,7 @@ const UpdateData = () => {
             time: timeValue,
         };
 
-        console.log('Contenido de los estados antes de enviar:', {
-            nameValue,
-            OPGs,
-            dependenciesarray,
-        });
-
-        axios.patch(`http://localhost:3000/data/${id}`, updatedData)
+        axios.patch(fullUrl, updatedData)
             .then(response => {
                 console.log('Respuesta del servidor:', response.data);
                 openDialog();
@@ -264,27 +255,26 @@ const UpdateData = () => {
     };
 
     const deleteOPG = (indice) => {
-        console.log("Entramos al DELETE en el índice:", indice);
-
         setOPGs(prevOPGs => {
             const updatedOPGs = [...prevOPGs];
             updatedOPGs.splice(indice, 1);
             return updatedOPGs;
         });
-    
+
         setDependenciesarray(prevDependencies => {
             const updatedDependencies = [...prevDependencies];
             updatedDependencies.splice(indice, 1);
             return updatedDependencies;
         });
-    
+
         setData(prevData => {
             const newData = { ...prevData };
-            newData.docNumber.splice(indice, 1);
-            newData.institution.splice(indice, 1);
+            newData.docNumber = newData.docNumber.filter((_, i) => i !== indice);
+            newData.institution = newData.institution.filter((_, i) => i !== indice);
             return newData;
         });
-    };    
+    };
+
 
     return (
         <div>

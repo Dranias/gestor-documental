@@ -52,6 +52,7 @@ const Datadisplay = () => {
     }
 
     const handleDownloadFile = async () => {
+        console.log(data[currentIndex].notes);
         try {
             const response = await axios.get(plantilla, {
                 responseType: 'arraybuffer',
@@ -71,18 +72,24 @@ const Datadisplay = () => {
 
             doc.setData({
                 Fecha: fechaFormateada,
+
                 Hora: `${data[currentIndex].time} horas`,
+
                 Nombre: data[currentIndex].name,
+
                 NumDoc: Array.isArray(data[currentIndex].docNumber)
                     ? data[currentIndex].docNumber.map(doc => `OPG/${doc}/2024`).join(', ')
                     : `OPG/${data[currentIndex].docNumber}/2024`,
+
                 SOLICITUD: data[currentIndex].description,
+
                 DEPENDENCIA: Array.isArray(data[currentIndex].docNumber)
                     ? data[currentIndex].docNumber.map((doc, index) => `OPG/${doc}/2024: ${data[currentIndex].institution[index]}`).join('\n')
                     : `OPG/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
+
                 FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n\n${data[currentIndex].legalBasis}` : '',
-                // OBSERVACIONES si no está vacío
-                OBSERVACIONES: data[currentIndex].textareaObs ? `OBSERVACIONES\r\n${data[currentIndex].textareaObs}` : '',
+
+                OBSERVACIONES: data[currentIndex].notes ? `OBSERVACIONES\r\n${data[currentIndex].notes}` : '',
             });
 
             try {
