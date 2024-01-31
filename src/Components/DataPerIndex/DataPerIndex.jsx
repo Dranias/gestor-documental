@@ -223,13 +223,15 @@ const DataPerIndex = () => {
                                         bgcolor: 'primary.dark',
                                     },
                                 }}>
-                                    <TextField
-                                        InputProps={{ readOnly: true }}
-                                        id="outlined-basic"
-                                        label="TEMA"
-                                        variant="outlined"
-                                        value={data[currentIndex].issue}
-                                    />
+                                    <Tooltip title={data[currentIndex].issue} placement="top">
+                                        <TextField
+                                            InputProps={{ readOnly: true }}
+                                            id="outlined-basic"
+                                            label="TEMA"
+                                            variant="outlined"
+                                            value={data[currentIndex].issue}
+                                        />
+                                    </Tooltip>
                                 </Box>
                             </Grid>
 
@@ -398,7 +400,7 @@ const DataPerIndex = () => {
                 <div className="footer" style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="Anterior">
-                            <button style={{ width: '70px', height: '70px' }} onClick={handlePrevClick}>
+                            <button style={{ width: '70px', height: '70px', display: direction === 'dataupdate' ? 'none' : 'block' }} onClick={handlePrevClick}>
                                 {/*display: direction === 'dataupdate' ? 'none' : 'block'*/}
                                 <img src={flechaizq} alt="Flecha izquierda" style={{ height: '70%' }} />
                             </button>
@@ -414,7 +416,7 @@ const DataPerIndex = () => {
                             </button>
                         </Tooltip>
                         <Tooltip title="Siguente">
-                            <button style={{ width: '70px', height: '70px' }} onClick={handleFowardClick}>
+                            <button style={{ width: '70px', height: '70px', display: direction === 'dataupdate' ? 'none' : 'block' }} onClick={handleFowardClick}>
                                 <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
                             </button>
                         </Tooltip>

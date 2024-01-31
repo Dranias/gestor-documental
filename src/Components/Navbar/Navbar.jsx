@@ -52,7 +52,12 @@ const Navbar = () => {
                 </Link>
                 <Link to="/datadisplay" style={{ textDecoration: 'none' }}>
                     <Button variant="contained" color="inherit" style={{ backgroundColor: '#691C32', fontSize: '20px', color: 'white' }}>
-                        Registros
+                        Ficha
+                    </Button>
+                </Link>
+                <Link to="/checklist" style={{ textDecoration: 'none' }}>
+                    <Button variant="contained" color="inherit" style={{ backgroundColor: '#691C32', fontSize: '20px', color: 'white' }}>
+                          Lista  
                     </Button>
                 </Link>
             </div>
