@@ -35,7 +35,7 @@ body {
 
 .container-opg {
     position: relative;
-    width: 95%; 
+    width: 100%;
     margin: 10px auto;
     display: flex;
     flex-direction: row;
@@ -53,7 +53,7 @@ body {
     margin-right: 10px;
 }
 
-.container-issue{
+.container-issue {
     border-color: #691C32;
     border-radius: 5px;
 }
@@ -76,27 +76,27 @@ body {
 .accordion-container {
     margin-top: 20px;
     position: relative;
-    z-index: 1; 
+    z-index: 1;
 }
 
 .text-containers {
     max-width: 76%;
     margin: 0 auto;
     padding: 10px;
-  }
+}
 
 .footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #D6D1C4;
+    background: rgb(195, 185, 159);
+    background: linear-gradient(90deg, rgba(195, 185, 159, 1) 0%, rgba(205, 194, 165, 1) 48%, rgba(181, 167, 132, 1) 100%); 
     display: flex;
     justify-content: center;
-    padding: 20px;
-    border-top: 1px solid #ccc;
+    padding: 8px;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
     z-index: 3;
 }
 
@@ -104,7 +104,6 @@ body {
     margin-right: 20px;
     padding: 8px 16px;
     font-size: 16px;
-    border: 3px solid #000000;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -112,4 +111,3 @@ body {
 .footer button:last-child {
     margin-right: 0;
 }
-

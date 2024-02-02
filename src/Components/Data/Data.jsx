@@ -17,14 +17,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 
 const Data = () => {
@@ -451,14 +445,15 @@ const Data = () => {
                   Asunto:
                 </Typography>
 
-                <TextareaAutosize
+                <textarea
+                  rows={4}
                   value={textareaContent}
                   onChange={(e) => {
                     setTextareaContent(e.target.value);
                     setTextareaError(false);
                   }}
                   style={{
-                    width: '95%',
+                    width: '98%',
                     minHeight: '15%',
                     border: '3px solid #9e2f5f',
                     borderRadius: '10px',
@@ -488,11 +483,12 @@ const Data = () => {
                   <Typography style={{ color: '#691C32' }}>Fundamento Jurídico</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <TextareaAutosize
+                  <textarea
+                    rows={4}
                     value={textarealegal}
                     onChange={(e) => setTextarealegal(e.target.value)}
                     style={{
-                      width: '95%',
+                      width: '98%',
                       minHeight: '150px',
                       border: '5px solid #ccc',
                       borderRadius: '4px',
@@ -515,11 +511,12 @@ const Data = () => {
                   <Typography className="observaciones-text">Observaciones</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <TextareaAutosize
+                  <textarea
+                    rows={4}
                     value={textareaObs}
                     onChange={(e) => setTextareaObs(e.target.value)}
                     style={{
-                      width: '95%',
+                      width: '98%',
                       minHeight: '150px',
                       border: '5px solid #ccc',
                       borderRadius: '4px',
@@ -539,12 +536,10 @@ const Data = () => {
           </Box>
         </div>
 
-        <div className="footer" style={{ marginTop: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button className="button" color="inherit" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
+        <div className="footer">
+            <button className="button"  style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
               Registrar
-            </Button>
-          </div>
+            </button>
         </div>
       </ThemeProvider>
 
@@ -562,26 +557,6 @@ const Data = () => {
             Error al enviar los datos
           </Alert>
         </Snackbar>
-
-        <Dialog
-          onClose={handleCloseDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Envío de datos"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Elementos agregados correctamente a la base de datos.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog} autoFocus>
-              Aceptar
-            </Button>
-          </DialogActions>
-        </Dialog>
       </div>
     </div>
   );

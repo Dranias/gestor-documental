@@ -7,7 +7,7 @@ import Datadisplay from './Components/Datadisplay/Datadisplay';
 import Dataperindex from './Components/DataPerIndex/DataPerIndex';
 import SearchData from './Components/Search/Search';
 import UpdateData from './Components/UpdateData/UpdateData';
-{/*import CheckList from './Components/CheckList/CheckList';*/ }
+import CheckList from './Components/CheckList/CheckList';
 
 const App = () => {
   return (
@@ -19,11 +19,9 @@ const App = () => {
           <Route path="/datadisplay" element={<Datadisplay />} />
           <Route path="/dataperindex/:id/:direction" element={<Dataperindex />} />
           <Route path="/updateData/:id" element={<UpdateData />} />
-          {/*<Route path="/searchdata" element={<SearchData />} />
-          
-  <Route path="/checklist" element={<CheckList />} />*/}
-  </Routes> 
-
+          <Route path="/searchdata" element={<SearchData />} />
+          <Route path="/checklist" element={<CheckList />} />
+        </Routes>
       </div>
     </Router>
   );

@@ -382,23 +382,23 @@ const Search = () => {
                     </Alert>
                 </Snackbar>
 
-                <div className="footer" style={{ marginTop: '20px' }}>
+                <div className="footer-search" style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <button style={{ width: '70px', height: '70px' }} onClick={handlePrevClick}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={handlePrevClick}>
                                 <img src={flechaizq} alt="Flecha izquierda" style={{ height: '70%' }} />
                             </button>
-                            <button style={{ width: '70px', height: '70px' }} onClick={updateData}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={updateData}>
                                 <img src={editar} alt="Editar" style={{ height: '70%' }} />
                             </button>
-                            <button style={{ width: '70px', height: '70px' }} onClick={handleDownloadFile}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={handleDownloadFile}>
                                 <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
                             </button>
-                            <button style={{ width: '70px', height: '70px' }} onClick={handleForwardClick}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={handleForwardClick}>
                                 <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
                             </button>
                         </div>
-                        <div style={{ marginTop: '20px' }}>
+                        <div style={{ marginTop: '5px' }}>
                             <Pagination
                                 count={data.length}
                                 page={currentIndex + 1}

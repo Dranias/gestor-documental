@@ -7,22 +7,23 @@
   overflow-y: auto;
 }
 
-.footer {
+.footer-datadisplay {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #D6D1C4;
+  background: rgb(195, 185, 159);
+  background: linear-gradient(90deg, rgba(195, 185, 159, 1) 0%, rgba(205, 194, 165, 1) 48%, rgba(181, 167, 132, 1) 100%);
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 5px;
   border-top: 1px solid #ccc;
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.footer button {
-  margin-right: 20px;
+.footer-datadisplay button {
+  margin-right: 30px;
   padding: 8px 16px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -30,7 +31,7 @@
   cursor: pointer;
 }
 
-.footer button:last-child {
+.footer-datadisplay button:last-child {
   margin-right: 0;
 }
 

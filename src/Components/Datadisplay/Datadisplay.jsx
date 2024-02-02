@@ -356,26 +356,26 @@ const Datadisplay = () => {
                         <img src={notfound} />
                     </div>
                 )}
-                <div className="footer" style={{ marginTop: '20px' }}>
+                <div className="footer-datadisplay">
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Tooltip title="Anterior">
-                            <button style={{ width: '70px', height: '70px'}} onClick={handlePrevClick}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={handlePrevClick}>
                                 {/*display: direction === 'dataupdate' ? 'none' : 'block'*/}
                                 <img src={flechaizq} alt="Flecha izquierda" style={{ height: '70%' }} />
                             </button>
                         </Tooltip>
                         <Tooltip title="Actualizar">
-                            <button style={{ width: '70px', height: '70px' }} onClick={updateData}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={updateData}>
                                 <img src={editar} alt="Editar" style={{ height: '70%' }} />
                             </button >
                         </Tooltip>
                         <Tooltip title="Imprimir ficha">
-                            <button style={{ width: '70px', height: '70px' }} onClick={handleDownloadFile}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={handleDownloadFile}>
                                 <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
                             </button>
                         </Tooltip>
                         <Tooltip title="Siguente">
-                            <button style={{ width: '70px', height: '70px' }} onClick={handleFowardClick}>
+                            <button style={{ width: '60px', height: '60px' }} onClick={handleFowardClick}>
                                 <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
                             </button>
                         </Tooltip>

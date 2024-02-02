@@ -487,11 +487,11 @@ const UpdateData = () => {
                     </div>
                 </Box>
 
-                <div className="footer" style={{ marginTop: '20px' }}>
+                <div className="footer-search" style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button className="button" color="inherit" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
+                        <button className="button" color="inherit" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
                             Modificar
-                        </Button>
+                        </button>
                     </div>
                 </div>
 
