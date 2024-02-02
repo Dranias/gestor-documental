@@ -400,7 +400,7 @@ const Data = () => {
                 spellCheck="true"
               />
               {textareaError && (
-                <div style={{ color: 'red', marginLeft: '10px' }}>
+                <div style={{ color: 'red', marginTop: '10px' }}>
                   Este campo no puede estar vacío.
                 </div>
               )}
