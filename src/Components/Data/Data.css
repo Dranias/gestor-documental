@@ -35,15 +35,14 @@ body {
 
 .container-opg {
     position: relative;
-    width: 100%;
-    margin-top: 20px;
-    margin-right: auto;
-    margin-left: auto;
+    width: 95%; 
+    margin: 10px auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     font-weight: normal;
     font-size: 15px;
+    justify-content: center;
 }
 
 .container-opg h1:nth-child(3) {

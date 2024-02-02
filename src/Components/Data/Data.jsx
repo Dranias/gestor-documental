@@ -52,71 +52,72 @@ const Data = () => {
   const handleButtonClick = () => {
     contador++;
     const newSection = (
-      <div className='container-opg' key={sections.length}>
+      <div key={sections.length} style={{ display: 'flex', alignItems: 'center' }}>
         <TextField
           id={`outlined-basic-${sections.length}`}
           label="OPG"
           variant="outlined"
-          style={{ width: '10%' }}
+          style={{
+            width: '10%',
+            marginRight: '10px',
+            marginTop: '15px',
+          }}
           onChange={(e) => handleOpgChange(contador, e.target.value)}
         />
-        <div style={{ display: 'flex', alignItems: 'center', width: '800px' }}>
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={dependencias}
-            freeSolo
-            sx={{ width: "150%" }}
-            renderInput={(params) => <TextField {...params} label="Dependencia de Turno" />}
-            onChange={(event, newValue) => {
-              setSelectedInstitution(newValue); // Cambiar el valor seleccionado
-              handleDependenciaChange(contador, newValue); // Llamar a tu función con el índice y el nuevo valor
-            }}
-          />
-          <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#691C32', color: 'white' }}>+</Button>
-          {sections.length > 0 && (
-            <Button variant='contained' onClick={() => handleRemoveButtonClick(sections.length - 1)} style={{ backgroundColor: '#A6A6A8', color: 'white' }}>-</Button>
-          )}
-        </div>
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={dependencias}
+          freeSolo
+          sx={{ width: "90%" }}
+          renderInput={(params) => <TextField {...params} label="Dependencia de Turno" style={{ marginTop: '15px' }} />}
+          onChange={(event, newValue) => {
+            setSelectedInstitution(newValue);
+            handleDependenciaChange(contador, newValue);
+          }}
+        />
+        <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#691C32', color: 'white' }}>+</Button>
+        {sections.length > 0 && (
+          <Button variant='contained' onClick={() => handleRemoveButtonClick(sections.length - 1)} style={{ backgroundColor: '#A6A6A8', color: 'white' }}>-</Button>
+        )}
       </div>
     );
     setSections(prevSections => {
       const updatedSections = [...prevSections, newSection];
       return updatedSections;
     });
-
   };
+
 
   //Sección OPG-Dependencia Original
   const [sections, setSections] = useState([
     (
-      <div className='container-opg' key={0}>
+      <div key={0} style={{ display: 'flex', alignItems: 'center' }}>
         <TextField
           id={`outlined-basic-${0}`}
           label="OPG"
           variant="outlined"
           style={{
-            width: '10%',
+            width: '8.8%',
+            marginRight: '10px',
           }}
           onChange={(e) => {
             handleOpgChange(contador, e.target.value);
           }}
         />
-        <div style={{ display: 'flex', alignItems: 'center', width: '80%' }}>
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={dependencias}
-            freeSolo
-            sx={{ width: "100%" }}
-            renderInput={(params) => <TextField {...params} label="Dependencia de Turno" />}
-            onChange={(event, newValue) => {
-              setSelectedInstitution(newValue); // Cambiar el valor seleccionado
-              handleDependenciaChange(0, newValue); // Llamar función con el índice y el nuevo valor
-            }}
-          />
-          <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#691C32', color: 'white' }}>+</Button>
-        </div>
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={dependencias}
+          freeSolo
+          sx={{ width: '80%' }}
+          renderInput={(params) => <TextField {...params} label="Dependencia de Turno" />}
+          onChange={(event, newValue) => {
+            setSelectedInstitution(newValue);
+            handleDependenciaChange(0, newValue);
+          }}
+        />
+        <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#691C32', color: 'white', marginLeft: '10px' }}>+</Button>
       </div>
     ),
   ]);
@@ -414,8 +415,9 @@ const Data = () => {
 
           <br />
 
-          <div style={{ width: '75%', marginLeft: '235px' }} >
+          <div className='container-opg' >
             <Box component="section"
+              style={{ width: '100%' }}
               sx={{
                 p: 2, border: 1,
                 bgcolor: 'primary.nofocus',

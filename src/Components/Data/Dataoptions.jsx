@@ -430,6 +430,7 @@ export const temas = [
   { label: 'Renuncia' },
   { label: 'Repertura de CAIC' },
   { label: 'Resintalación laboral' },
+  { label: 'Solicitud de respuesta' },
   { label: 'Restauración de inmuebles por sismo' },
   { label: 'Retiro de árbol' },
   { label: 'Reunión' },
@@ -474,7 +475,8 @@ export const temas = [
   { label: 'Víctima de delito' },
   { label: 'Violencia de Género' },
   { label: 'Instalación de drenaje' },
-  { label: 'Alumbrado público' }
+  { label: 'Alumbrado público' },
+  { label: 'Rehabilitación de parques' }
 ];
 
 export const dependencias = [
@@ -517,6 +519,7 @@ export const dependencias = [
   { label: 'Honorable Ayuntamiento de Acajete' },
   { label: 'Honorable Ayuntamiento de Acatzingo' },
   { label: 'Honorable Ayuntamiento de Acteopan' },
+  { label: 'Honorable Ayuntamiento de Ahuatlán' },
   { label: 'Honorable Ayuntamiento de Ahuacatlán' },
   { label: 'Honorable Ayuntamiento de Ahuazotepec' },
   { label: 'Honorable Ayuntamiento de Ajalpan' },

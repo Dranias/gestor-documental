@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Box from '@mui/material/Box';
 import minus from '../../assets/minus.png';
+import plus from '../../assets/plus.png';
 
 const UpdateData = () => {
     const { id } = useParams();
@@ -269,6 +270,10 @@ const UpdateData = () => {
         });
     };
 
+    const addOPG = () => {
+        console.log("Al add");
+    };
+
 
     return (
         <div>
@@ -386,9 +391,16 @@ const UpdateData = () => {
                                         handleDependenciaChange(index, newValue);
                                     }}
                                 />
+
+                                {data.docNumber.length === index + 1 && (
+                                    <button style={{ width: '50px', height: '50px', backgroundColor: 'transparent', border: 'none' }} onClick={() => addOPG()} >
+                                        <img src={plus} style={{ height: '80%' }} />
+                                    </button>
+                                )}
+
                                 {data.docNumber.length > 1 && (
                                     <button style={{ width: '50px', height: '50px', backgroundColor: 'transparent', border: 'none' }} onClick={() => deleteOPG(index)} >
-                                        <img src={minus} alt="Flecha derecha" style={{ height: '80%' }} />
+                                        <img src={minus} alt="Eliminar" style={{ height: '80%' }} />
                                     </button>
                                 )}
                             </div>
