@@ -20,6 +20,11 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const Data = () => {
 
@@ -36,6 +41,10 @@ const Data = () => {
   const [openDialogs, setOpenDialog] = React.useState(false);
   const [textareaError, setTextareaError] = useState(false);
   const [isTemaValid, setIsTemaValid] = useState(true);
+  const [dialogMessage, setdialogMessage] = useState('');
+  const [dialogTitle, setdialogTitle] = useState('');
+
+
   const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_POST;
 
   const navigate = useNavigate();
@@ -249,17 +258,30 @@ const Data = () => {
     axios.post(apiUrl, newData)
       .then(response => {
         console.log('Respuesta del servidor:', response.data);
-        openDialog();
+        if (errorMessage === 'Hoja de datos creada exitosamente') {
+          setdialogTitle("Agregado existoso");
+          setdialogMessage("Datos agregados correctamente, será redirigido a la Ficha Informativa");
+          openDialog();
+        }
         navigate(`/datadisplay`);
       })
       .catch(error => {
         console.error('Error al enviar los datos:', error);
-        if (error.response && error.response.data && error.response.data.message === 'El número de documento ya existe') {
-          setErrorSnackbarOpen(true);
+
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          if (errorMessage === 'El número de documento ya existe' && error.response.status === 400) {
+            setdialogTitle("Error al enviar los datos");
+            setdialogMessage("Número de OPG ya existe en la base de datos.");
+            openDialog();
+          } else {
+            setErrorSnackbarOpen(true);
+          }
         } else {
           setErrorSnackbarOpen(true);
         }
       });
+
   };
 
   // --------   principal   -------
@@ -537,9 +559,9 @@ const Data = () => {
         </div>
 
         <div className="footer">
-            <button className="button"  style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
-              Registrar
-            </button>
+          <button className="button" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
+            Registrar
+          </button>
         </div>
       </ThemeProvider>
 
@@ -554,9 +576,30 @@ const Data = () => {
           }}
         >
           <Alert onClose={handleErrorSnackbarClose} severity="error">
-            Error al enviar los datos
+            Error en el registro.
           </Alert>
         </Snackbar>
+
+        <Dialog
+          open={openDialogs}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {dialogTitle}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {dialogMessage}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} autoFocus>
+              Aceptar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
