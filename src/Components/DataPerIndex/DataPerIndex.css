@@ -44,35 +44,92 @@
 }
 
 .loader {
-  width: 200px;
-  height: 200px;
-  display: grid;
-  color: #691C32;
-  background:
-    linear-gradient(currentColor 0 0) top/100% 2px,
-    radial-gradient(farthest-side at top, #0000 calc(100% - 2px), currentColor calc(100% - 1px), #0000) top,
-    linear-gradient(currentColor 0 0) bottom/100% 2px,
-    radial-gradient(farthest-side at bottom, #0000 calc(100% - 2px), currentColor calc(100% - 1px), #0000) bottom;
-  background-size: 100% 1px, 100% 50%;
-  background-repeat: no-repeat;
-  animation: l18 4s infinite linear;
+  --cell-size: 52px;
+  --cell-spacing: 1px;
+  --cells: 3;
+  --total-size: calc(var(--cells) * (var(--cell-size) + 2 * var(--cell-spacing)));
+  display: flex;
+  flex-wrap: wrap;
+  width: var(--total-size);
+  height: var(--total-size);
 }
 
-.loader::before,
-.loader::after {
-  content: "";
-  grid-area: 1/1;
-  background: inherit;
-  border: inherit;
-  animation: inherit;
+.cell {
+  flex: 0 0 var(--cell-size);
+  margin: var(--cell-spacing);
+  background-color: transparent;
+  box-sizing: border-box;
+  border-radius: 4px;
+  animation: 1.5s ripple ease infinite;
 }
 
-.loader::after {
-  animation-duration: 2s;
+.cell.d-1 {
+  animation-delay: 100ms;
 }
 
-@keyframes l18 {
+.cell.d-2 {
+  animation-delay: 200ms;
+}
+
+.cell.d-3 {
+  animation-delay: 300ms;
+}
+
+.cell.d-4 {
+  animation-delay: 400ms;
+}
+
+.cell:nth-child(1) {
+  --cell-color: #C47451;
+}
+
+.cell:nth-child(2) {
+  --cell-color: #A05544;
+}
+
+.cell:nth-child(3) {
+  --cell-color: #EB5406;
+}
+
+.cell:nth-child(4) {
+  --cell-color: #B86500;
+}
+
+.cell:nth-child(5) {
+  --cell-color: #CB6D51;
+}
+
+.cell:nth-child(6) {
+  --cell-color: #B86500;
+}
+
+.cell:nth-child(7) {
+  --cell-color: #A05544;
+}
+
+.cell:nth-child(8) {
+  --cell-color: #C04000;
+}
+
+.cell:nth-child(9) {
+  --cell-color: #A55D35;
+}
+
+/*Animation*/
+@keyframes ripple {
+  0% {
+    background-color: transparent;
+  }
+
+  30% {
+    background-color: var(--cell-color);
+  }
+
+  60% {
+    background-color: transparent;
+  }
+
   100% {
-    transform: rotate(1turn)
+    background-color: transparent;
   }
 }
