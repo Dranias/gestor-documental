@@ -258,7 +258,7 @@ const Data = () => {
     axios.post(apiUrl, newData)
       .then(response => {
         console.log('Respuesta del servidor:', response.data);
-        if (errorMessage === 'Hoja de datos creada exitosamente') {
+        if (response.data.message === 'Hoja de datos creada exitosamente') {
           setdialogTitle("Agregado existoso");
           setdialogMessage("Datos agregados correctamente, será redirigido a la Ficha Informativa");
           openDialog();
