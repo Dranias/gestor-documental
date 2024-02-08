@@ -243,7 +243,6 @@ export const temas = [
   { label: 'Gasto educativo' },
   { label: 'Gobierno' },
   { label: 'Gratuidad' },
-  { label: 'Gratuidad.' },
   { label: 'Horas docente' },
   { label: 'Hospitalario' },
   { label: 'Hospitales' },
@@ -476,6 +475,7 @@ export const temas = [
   { label: 'Violencia de Género' },
   { label: 'Instalación de drenaje' },
   { label: 'Alumbrado público' },
+  { label: 'Permiso para negocio' },
   { label: 'Rehabilitación de parques' }
 ];
 
@@ -483,9 +483,11 @@ export const dependencias = [
   { label: 'Auditoría Superior del Estado' },
   { label: 'Bienes Muebles e Inmuebles de la Secretaría de Administración' },
   { label: 'Centro INAH Puebla' },
+  { label: 'Colegio Mexicano de Podólogos Siglo XXI A.C.' },
   { label: 'Comisión Ejecutiva Estatal de Atención a Víctimas' },
   { label: 'Comisión Estatal de Búsqueda de Personas' },
   { label: 'Comisión Estatal de Vivienda en Puebla' },
+  { label: 'Consejo de la Judicatura del Poder Judicial del Estado de Puebla' },
   { label: 'Consejería Jurídica' },
   { label: 'Coordinación General de Comunicación y Agenda Digital' },
   { label: 'Coordinación General de Protección Civil' },
