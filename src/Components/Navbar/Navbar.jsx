@@ -1,5 +1,7 @@
 import './Navbar.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem'
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -11,18 +13,23 @@ import gobierno_presente from '../../assets/gobierno-presente.jpg';
 import axios from 'axios';
 
 const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_SEARCH;
-const apiUrlHome = import.meta.env.VITE_REACT_APP_GESTOR_APP_HOME;
-
-
 
 const Navbar = () => {
-
     const { setSearchResults } = useSearch();
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(null);
 
     const goToMain = () => {
         navigate('/');
+    };
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     const handleSearch = async (query) => {
@@ -61,6 +68,35 @@ const Navbar = () => {
                         Lista
                     </Button>
                 </Link>
+
+                <div>
+                    <Button
+                        variant="contained" color="inherit"
+                        style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                    >
+                        Datos
+                    </Button>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <Link to="/institutions" style={{ textDecoration: 'none' }}>
+                            <MenuItem onClick={handleClose}>Dependencias</MenuItem>
+                        </Link>
+                        <MenuItem onClick={handleClose}>Temas</MenuItem>
+                    </Menu>
+                </div>
+
             </div>
 
             <div className='search-box' style={{ backgroundColor: '#691C32', padding: '10px 20px', borderRadius: '50px', display: 'flex', alignItems: 'center' }}>

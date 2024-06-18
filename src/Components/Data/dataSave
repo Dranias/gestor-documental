@@ -1,6 +1,6 @@
 import './Data.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { temas, dependencias, customTheme } from './Dataoptions';
 import { TextField, Grid, Button } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
@@ -44,25 +44,12 @@ const Data = () => {
   const [dialogMessage, setdialogMessage] = useState('');
   const [dialogTitle, setdialogTitle] = useState('');
 
+
   const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_POST;
 
   const navigate = useNavigate();
   let contador = 0;
 
-  const [institutions, setDependencias] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-        const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INSTITUTIONS;
-        const response = await axios.get(apiUrl);
-        const dependenciasData = await response.data.map(item => ({ label: item.institution }));
-        setDependencias(dependenciasData);
-    };
-    fetchData()
-    .catch(console.error);
-  }, []);
-
-  console.log("Dependencias: ", institutions);
 
   //Repetir la sección OPG-Dependencia
   const handleButtonClick = () => {
@@ -82,7 +69,7 @@ const Data = () => {
         />
         <Autocomplete
           disablePortal
-          id="combo-box-demo" 
+          id="combo-box-demo"
           options={dependencias}
           freeSolo
           sx={{ width: "90%" }}
@@ -455,12 +442,11 @@ const Data = () => {
                 },
               }}
             >
-              {institutions.length > 0 && sections.map((section, index) => (
+              {sections.map((section, index) => (
                 <React.Fragment key={index}>
                   {React.cloneElement(section)}
                 </React.Fragment>
               ))}
-
               <br />
             </Box>
           </div>
@@ -617,8 +603,7 @@ const Data = () => {
       </div>
     </div>
   );
-
-}
+};
 
 export default Data;
 

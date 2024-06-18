@@ -8,6 +8,7 @@ import Dataperindex from './Components/DataPerIndex/DataPerIndex';
 import SearchData from './Components/Search/Search';
 import UpdateData from './Components/UpdateData/UpdateData';
 import CheckList from './Components/CheckList/CheckList';
+import Institutions from './Components/Institutions/Institutions'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/updateData/:id" element={<UpdateData />} />
           <Route path="/searchdata" element={<SearchData />} />
           <Route path="/checklist" element={<CheckList />} />
+          <Route path="/institutions" element={<Institutions />} />
         </Routes>
       </div>
     </Router>

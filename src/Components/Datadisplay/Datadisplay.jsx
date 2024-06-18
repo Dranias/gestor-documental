@@ -88,7 +88,7 @@ const Datadisplay = () => {
                     ? data[currentIndex].docNumber.map((doc, index) => `OPG/${doc}/2024: ${data[currentIndex].institution[index]}`).join('\n')
                     : `OPG/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
 
-                FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n\n${data[currentIndex].legalBasis}` : '',
+                FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
 
                 OBSERVACIONES: data[currentIndex].notes ? `OBSERVACIONES\r\n${data[currentIndex].notes}` : '',
             });
