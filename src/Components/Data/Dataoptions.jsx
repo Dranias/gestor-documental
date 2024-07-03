@@ -496,7 +496,7 @@ export const dependencias = [
   { label: 'Coordinadora General Administrativa del Ejecutivo del Estado de Puebla' },
   { label: 'Dirección de Apoyo Técnico Legal de la Secretaría de Planeación y Finanzas' },
   { label: 'Coordinación de Atención Ciudadana' },
-  { label: 'Coordinación de General Administrativa del Ejecutivo del Estado' },
+  { label: 'Coordinación General Administrativa del Ejecutivo del Estado' },
   { label: 'Coordinación Estatal del OPD IMSS-Bienestar' },
   { label: 'Dirección del Archivo General del Estado' },
   { label: 'Dirección de Convenciones y Parques' },
@@ -645,7 +645,8 @@ export const dependencias = [
   { label: 'Delegación del Registro Agrario Nacional en Puebla' },
   { label: 'Unidad de Transparencia de la Oficina del Gobernador' },
   { label: 'Universidad de la Salud' },
-  { label: 'Comisión de la DGETAyCM en Puebla' }
+  { label: 'Comisión de la DGETAyCM en Puebla' }, 
+  { label: 'Comisión de Derechos Humanos del Estado de Puebla' }
 ];
 
 export const useDependencias  = () => {
