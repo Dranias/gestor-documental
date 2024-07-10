@@ -1,12 +1,11 @@
 import "./Institutions.css";
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import edit from '../../assets/edit.png';
 import trash from '../../assets/trash.png';
 import Tooltip from '@mui/material/Tooltip';
 import search_icon_light from '../../assets/search-w.png';
 import Box from '@mui/material/Box';
-import { Grid } from '@mui/material';
+import { Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { customTheme } from '../Datadisplay/Datadisplayoptions';
 import ModalInstitution from '../Institutions/ModalInstitution';
@@ -14,6 +13,8 @@ import ModalInstitution from '../Institutions/ModalInstitution';
 const Institutions = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [selectedId, setSelectedId] = useState(null);
     const outerTheme = useTheme();
 
     useEffect(() => {
@@ -30,6 +31,7 @@ const Institutions = ({ deleteRow, editRow }) => {
                     })
                     : [response.data];
                 setData(sortedData);
+                console.log(sortedData);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -39,6 +41,11 @@ const Institutions = ({ deleteRow, editRow }) => {
 
     const handleOpenModal = () => setModalOpen(true);
     const handleCloseModal = () => setModalOpen(false);
+    const handleOpenConfirm = (id) => {
+        setSelectedId(id);
+        setConfirmOpen(true);
+    };
+    const handleCloseConfirm = () => setConfirmOpen(false);
 
     const addInstitution = (name) => {
         const newInstitution = {
@@ -47,6 +54,23 @@ const Institutions = ({ deleteRow, editRow }) => {
             createdAt: new Date().toISOString(),
         };
         setData([newInstitution, ...data]);
+    };
+
+    const deleteInstitutionById = async (id) => {
+        try {
+            const apiUrl = `${import.meta.env.VITE_REACT_APP_GESTOR_APP_INSTITUTION_DELETE}/${id}`;
+            await axios.delete(apiUrl);
+            setData(data.filter((institution) => institution.id !== id));
+            handleCloseConfirm();
+        } catch (error) {
+            console.error('Error deleting institution:', error);
+        }
+    };
+
+    const confirmDelete = () => {
+        if (selectedId) {
+            deleteInstitutionById(selectedId);
+        }
     };
 
     return (
@@ -67,29 +91,6 @@ const Institutions = ({ deleteRow, editRow }) => {
                                 Nuevo
                             </button>
                         </Box>
-                        <Grid item xs={2}>
-                            <Box component="section"
-                                sx={{
-                                    p: 2, border: 1,
-                                    bgcolor: 'primary.nofocus',
-                                    '&:hover': {
-                                        bgcolor: 'primary.dark',
-                                    },
-                                }}
-                            >
-                                <div className='search-box' style={{ backgroundColor: '#691C32', padding: '10px 20px', borderRadius: '40px', display: 'flex', alignItems: 'center', width: '250px' }}>
-                                    <Tooltip title={"Busqueda de Dependencia"} placement="top">
-                                        <input
-                                            type="text"
-                                            placeholder='Buscar'
-                                            onChange={(e) => handleSearch(e.target.value)}
-                                            style={{ backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'white', fontSize: '18px', maxWidth: '200px' }}
-                                        />
-                                    </Tooltip>
-                                    <img src={search_icon_light} alt="Search Icon" />
-                                </div>
-                            </Box>
-                        </Grid>
                     </Grid>
                 </Box>
                 <div>
@@ -98,20 +99,20 @@ const Institutions = ({ deleteRow, editRow }) => {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="expand">Instituciones</th>
-                            <th>Acciones</th>
+                            <th className="expand">Dependencias</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.length > 0 ? data.map((row, idx) => (
-                            <tr key={idx}>
+                        {data.length > 0 ? data.map((row) => (
+                            <tr key={row.id}>
                                 <td className="expand">{row.institution}</td>
                                 <td className="fit">
                                     <span className="actions">
-                                        <button style={{ width: '60px', height: '60px', backgroundColor: 'transparent', border: 'none' }} onClick={() => editRow(idx)}>
-                                            <img src={edit} alt="Edit" style={{ height: '70%' }} />
-                                        </button>
-                                        <button style={{ width: '60px', height: '60px', backgroundColor: 'transparent', border: 'none' }} onClick={() => deleteRow(idx)}>
+                                        <button
+                                            style={{ width: '60px', height: '60px', backgroundColor: 'transparent', border: 'none' }}
+                                            onClick={() => handleOpenConfirm(row.id)}
+                                        >
                                             <img src={trash} alt="Delete" style={{ height: '70%' }} />
                                         </button>
                                     </span>
@@ -125,6 +126,30 @@ const Institutions = ({ deleteRow, editRow }) => {
                     </tbody>
                 </table>
                 <ModalInstitution open={modalOpen} handleClose={handleCloseModal} addInstitution={addInstitution} />
+
+                <Dialog
+                    open={confirmOpen}
+                    onClose={handleCloseConfirm}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"¿Está seguro de eliminar?"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Esta acción no se puede deshacer.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseConfirm} style={{ backgroundColor: '#AFA5A2'}}>
+                            Cancelar
+                        </Button>
+                        <Button onClick={confirmDelete} style={{ backgroundColor: '#691C32'}} autoFocus>
+                            Eliminar
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </ThemeProvider>
         </div>
     );

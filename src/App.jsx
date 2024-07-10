@@ -11,7 +11,6 @@ import CheckList from './Components/CheckList/CheckList';
 import Institutions from './Components/Institutions/Institutions'
 import Invitations from './Components/Invitations/InvitationsList'
 import Issue from './Components/Issue/Issue'
-import Test from './Components/Test/Test'
 
 const App = () => {
   return (
@@ -28,7 +27,6 @@ const App = () => {
           <Route path="/institutions" element={<Institutions />} />
           <Route path="/invitations" element={<Invitations />} />
           <Route path="/issue" element={<Issue />} />
-          <Route path="/test" element={<Test />} />
         </Routes>
       </div>
     </Router>

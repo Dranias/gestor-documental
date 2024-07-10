@@ -67,29 +67,6 @@ const Issue = ({ deleteRow, editRow }) => {
                                 Nuevo
                             </button>
                         </Box>
-                        <Grid item xs={2}>
-                            <Box component="section"
-                                sx={{
-                                    p: 2, border: 1,
-                                    bgcolor: 'primary.nofocus',
-                                    '&:hover': {
-                                        bgcolor: 'primary.dark',
-                                    },
-                                }}
-                            >
-                                <div className='search-box' style={{ backgroundColor: '#691C32', padding: '10px 20px', borderRadius: '40px', display: 'flex', alignItems: 'center', width: '250px' }}>
-                                    <Tooltip title={"Busqueda de Dependencia"} placement="top">
-                                        <input
-                                            type="text"
-                                            placeholder='Buscar'
-                                            onChange={(e) => handleSearch(e.target.value)}
-                                            style={{ backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'white', fontSize: '18px', maxWidth: '200px' }}
-                                        />
-                                    </Tooltip>
-                                    <img src={search_icon_light} alt="Search Icon" />
-                                </div>
-                            </Box>
-                        </Grid>
                     </Grid>
                 </Box>
                 <div>
@@ -99,7 +76,7 @@ const Issue = ({ deleteRow, editRow }) => {
                     <thead>
                         <tr>
                             <th className="expand">Temas</th>
-                            <th>Acciones</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,9 +85,6 @@ const Issue = ({ deleteRow, editRow }) => {
                                 <td className="expand">{row.issue}</td>
                                 <td className="fit">
                                     <span className="actions">
-                                        <button style={{ width: '60px', height: '60px', backgroundColor: 'transparent', border: 'none' }} onClick={() => editRow(idx)}>
-                                            <img src={edit} alt="Edit" style={{ height: '70%' }} />
-                                        </button>
                                         <button style={{ width: '60px', height: '60px', backgroundColor: 'transparent', border: 'none' }} onClick={() => deleteRow(idx)}>
                                             <img src={trash} alt="Delete" style={{ height: '70%' }} />
                                         </button>
