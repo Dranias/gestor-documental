@@ -43,26 +43,80 @@ const Data = () => {
   const [isTemaValid, setIsTemaValid] = useState(true);
   const [dialogMessage, setdialogMessage] = useState('');
   const [dialogTitle, setdialogTitle] = useState('');
+  const [institutions, setDependencias] = useState([]);
+  const [issues, setIssues] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_POST;
 
-  const navigate = useNavigate();
-  let contador = 0;
-
-  const [institutions, setDependencias] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INSTITUTIONS;
+        const response = await axios.get(apiUrl);
+        const dependenciasData = response.data.map(item => ({ label: item.institution }));
+        setDependencias(dependenciasData);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
-        const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INSTITUTIONS;
-        const response = await axios.get(apiUrl);
-        const dependenciasData = await response.data.map(item => ({ label: item.institution }));
-        setDependencias(dependenciasData);
+      const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_ISSUE;
+      const response = await axios.get(apiUrl);
+      const issueData = await response.data.map(item => ({ label: item.issue }));
+      setIssues(issueData);
     };
     fetchData()
-    .catch(console.error);
+      .catch(console.error);
   }, []);
-
   console.log("Dependencias: ", institutions);
+
+  useEffect(() => {
+    if (!loading && institutions.length > 0) {
+      setSections([
+        createNewSection(0)
+      ]);
+    }
+  }, [institutions, loading]);
+
+  const createNewSection = (index) => (
+    <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+        <TextField
+            id={`outlined-basic-${index}`}
+            label="OPG"
+            variant="outlined"
+            style={{
+                width: '8.8%',
+                marginRight: '10px',
+            }}
+            onChange={(e) => handleOpgChange(index, e.target.value)}
+        />
+        <Autocomplete
+            disablePortal
+            id={`combo-box-demo-${index}`}
+            options={institutions}
+            freeSolo
+            sx={{ width: '80%' }}
+            renderInput={(params) => <TextField {...params} label="Dependencia de Turno" />}
+            onChange={(event, newValue) => {
+                setSelectedInstitution(newValue);
+                handleDependenciaChange(index, newValue);
+            }}
+        />
+        <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#691C32', color: 'white', marginLeft: '10px' }}>+</Button>
+        {sections.length > 0 && (
+            <Button variant='contained' onClick={() => handleRemoveButtonClick(index)} style={{ backgroundColor: '#A6A6A8', color: 'white' }}>-</Button>
+        )}
+    </div>
+);
+
+  const navigate = useNavigate();
+  let contador = 0;
 
   //Repetir la sección OPG-Dependencia
   const handleButtonClick = () => {
@@ -82,8 +136,8 @@ const Data = () => {
         />
         <Autocomplete
           disablePortal
-          id="combo-box-demo" 
-          options={dependencias}
+          id="combo-box-demo"
+          options={institutions}
           freeSolo
           sx={{ width: "90%" }}
           renderInput={(params) => <TextField {...params} label="Dependencia de Turno" style={{ marginTop: '15px' }} />}
@@ -383,7 +437,7 @@ const Data = () => {
                   <Autocomplete
                     disablePortal
                     id="combo-box-demo"
-                    options={temas}
+                    options={issues}
                     freeSolo
                     sx={{ width: 300 }}
                     renderInput={(params) =>
@@ -446,7 +500,7 @@ const Data = () => {
 
           <div className='container-opg' >
             <Box component="section"
-              style={{ width: '100%' }}
+              style={{ width: '75%' }}
               sx={{
                 p: 2, border: 1,
                 bgcolor: 'primary.nofocus',
@@ -455,13 +509,12 @@ const Data = () => {
                 },
               }}
             >
-              {institutions.length > 0 && sections.map((section, index) => (
+              {!loading && institutions.length > 0 && sections.map((section, index) => (
                 <React.Fragment key={index}>
                   {React.cloneElement(section)}
                 </React.Fragment>
-              ))}
-
-              <br />
+              ))
+              }
             </Box>
           </div>
 
@@ -621,5 +674,3 @@ const Data = () => {
 }
 
 export default Data;
-
-

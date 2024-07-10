@@ -1,6 +1,6 @@
 import './Data.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { temas, dependencias, customTheme } from './Dataoptions';
 import { TextField, Grid, Button } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
@@ -43,13 +43,37 @@ const Data = () => {
   const [isTemaValid, setIsTemaValid] = useState(true);
   const [dialogMessage, setdialogMessage] = useState('');
   const [dialogTitle, setdialogTitle] = useState('');
-
+  const [institutions, setDependencias] = useState([]);
+  const [issues, setIssues] = useState([]);
 
   const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_POST;
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INSTITUTIONS;
+      const response = await axios.get(apiUrl);
+      const dependenciasData = await response.data.map(item => ({ label: item.institution }));
+      setDependencias(dependenciasData);
+    };
+    fetchData()
+      .catch(console.error);
+  }, []);
+  console.log("Dependencias: ", institutions);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_ISSUE;
+      const response = await axios.get(apiUrl);
+      const issueData = await response.data.map(item => ({ label: item.issue }));
+      setIssues(issueData);
+    };
+    fetchData()
+      .catch(console.error);
+  }, []);
+  console.log("Dependencias: ", institutions);
+
   const navigate = useNavigate();
   let contador = 0;
-
 
   //Repetir la sección OPG-Dependencia
   const handleButtonClick = () => {
@@ -370,7 +394,7 @@ const Data = () => {
                   <Autocomplete
                     disablePortal
                     id="combo-box-demo"
-                    options={temas}
+                    options={issues}
                     freeSolo
                     sx={{ width: 300 }}
                     renderInput={(params) =>
@@ -433,7 +457,7 @@ const Data = () => {
 
           <div className='container-opg' >
             <Box component="section"
-              style={{ width: '100%' }}
+              style={{ width: '75%' }}
               sx={{
                 p: 2, border: 1,
                 bgcolor: 'primary.nofocus',
@@ -442,12 +466,12 @@ const Data = () => {
                 },
               }}
             >
-              {sections.map((section, index) => (
+              {institutions.length > 0 && sections.map((section, index) => (
                 <React.Fragment key={index}>
                   {React.cloneElement(section)}
                 </React.Fragment>
-              ))}
-              <br />
+              ))
+              }
             </Box>
           </div>
 
@@ -603,8 +627,7 @@ const Data = () => {
       </div>
     </div>
   );
-};
+
+}
 
 export default Data;
-
-

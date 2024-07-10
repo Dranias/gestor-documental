@@ -646,7 +646,8 @@ export const dependencias = [
   { label: 'Unidad de Transparencia de la Oficina del Gobernador' },
   { label: 'Universidad de la Salud' },
   { label: 'Comisión de la DGETAyCM en Puebla' }, 
-  { label: 'Comisión de Derechos Humanos del Estado de Puebla' }
+  { label: 'Comisión de Derechos Humanos del Estado de Puebla' },
+  { label: 'Universidad Tecnológica de Puebla' }
 ];
 
 export const useDependencias  = () => {

@@ -1,4 +1,4 @@
-import "./Institutions.css";
+import "./Issue.css";
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import edit from '../../assets/edit.png';
@@ -9,9 +9,9 @@ import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { customTheme } from '../Datadisplay/Datadisplayoptions';
-import ModalInstitution from '../Institutions/ModalInstitution';
+import ModalIssue from '../Issue/ModalIssue';
 
-const Institutions = ({ deleteRow, editRow }) => {
+const Issue = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const outerTheme = useTheme();
@@ -19,7 +19,7 @@ const Institutions = ({ deleteRow, editRow }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INSTITUTIONS;
+                const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_ISSUE;
                 const response = await axios.get(apiUrl);
 
                 const sortedData = Array.isArray(response.data)
@@ -98,14 +98,14 @@ const Institutions = ({ deleteRow, editRow }) => {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="expand">Instituciones</th>
+                            <th className="expand">Temas</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.length > 0 ? data.map((row, idx) => (
                             <tr key={idx}>
-                                <td className="expand">{row.institution}</td>
+                                <td className="expand">{row.issue}</td>
                                 <td className="fit">
                                     <span className="actions">
                                         <button style={{ width: '60px', height: '60px', backgroundColor: 'transparent', border: 'none' }} onClick={() => editRow(idx)}>
@@ -124,10 +124,10 @@ const Institutions = ({ deleteRow, editRow }) => {
                         )}
                     </tbody>
                 </table>
-                <ModalInstitution open={modalOpen} handleClose={handleCloseModal} addInstitution={addInstitution} />
+                <ModalIssue open={modalOpen} handleClose={handleCloseModal} addInstitution={addInstitution} />
             </ThemeProvider>
         </div>
     );
 };
 
-export default Institutions;
+export default Issue;

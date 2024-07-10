@@ -1,0 +1,145 @@
+import { useMemo } from 'react';
+import {
+    MaterialReactTable,
+    useMaterialReactTable,
+} from 'material-react-table';
+import React, { useState } from "react";
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
+import ModalInvitation from '../Invitations/ModallInvitation'
+
+const Example = () => {
+
+    const [responseData, setResponseData] = React.useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => setModalOpen(true);
+    const handleCloseModal = () => {
+        setModalOpen(false);
+        window.location.reload(); // Recarga la página al cerrar el modal
+    };
+
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INVITATIONS;
+                const response = await axios.get(apiUrl);
+                const reversedData = Array.isArray(response.data) ? response.data.reverse() : [response.data];
+                setResponseData(reversedData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const data = useMemo(() => {
+        if (!responseData) return [];
+        return responseData.flatMap((item, index) => {
+            return [{
+                name: item.name,
+                position: item.position,
+                avenue: item.avenue,
+                municipality: item.municipality, 
+                day: item.day, 
+                enventDate: item.enventDate, 
+                enventHour: item.enventHour,
+                event: item.event,
+                matters: item.matters, 
+                priority: item.priority,
+            }];
+        });
+    }, [responseData]);
+
+
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: 'name',
+                header: 'INVITA:',
+                size: 30,
+            },
+            {
+                accessorKey: 'position',
+                header: 'CARGO:',
+                size: 100,
+            },
+            {
+                accessorKey: 'avenue',
+                header: 'LUGAR DEL EVENTO:',
+                size: 100,
+            },
+            {
+                accessorKey: 'municipality',
+                header: 'CIUDAD/MUNICIPIO:',
+                size: 200,
+            },
+            {
+                accessorKey: 'day',
+                header: 'DÍA:',
+                size: 200,
+            },
+            {
+                accessorKey: 'enventDate',
+                header: 'FECHA:',
+                size: 200,
+            },
+            {
+                accessorKey: 'enventHour',
+                header: 'HORA:',
+                size: 200,
+            },
+            {
+                accessorKey: 'event',
+                header: 'EVENTO',
+                size: 200,
+            },
+            {
+                accessorKey: 'matters',
+                header: 'ASUNTOS A CONSIDERAR',
+                size: 200,
+            },
+            {
+                accessorKey: 'priority',
+                header: 'PRIORIDAD',
+                size: 200,
+            },
+        ],
+        [],
+    );
+
+    const table = useMaterialReactTable({
+        columns,
+        data,
+    });
+
+    return (
+
+        <Box display="flex" justifyContent="center" alignItems="center">
+            <Box style={{ width: '90%' }}>
+                <Grid container className='grid'>
+                    <Box component="section"
+                        sx={{
+                            p: 2, border: 1,
+                            bgcolor: 'primary.nofocus',
+                            '&:hover': {
+                                bgcolor: '#691C32',
+                            },
+                        }}
+                    >
+                        <button className="button" style={{ backgroundColor: '#095240', width: '100%', fontSize: '1em', color: 'white' }} onClick={handleOpenModal}>
+                            Agregar
+                        </button>
+                    </Box>
+                </Grid>
+                <br/>
+                <MaterialReactTable table={table} />
+                <ModalInvitation open={modalOpen} handleClose={handleCloseModal} />
+            </Box>
+        </Box>
+    );
+};
+
+export default Example;

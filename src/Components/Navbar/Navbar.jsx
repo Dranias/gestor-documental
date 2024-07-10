@@ -24,11 +24,20 @@ const Navbar = () => {
     };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorElInvitations, setAnchorElInvitations] = React.useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleClickInvitations = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleCloseInvitations = () => {
         setAnchorEl(null);
     };
 
@@ -68,6 +77,11 @@ const Navbar = () => {
                         Lista
                     </Button>
                 </Link>
+                <Link to="/invitations" style={{ textDecoration: 'none' }}>
+                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}>
+                        Invitaciones
+                    </Button>
+                </Link>
 
                 <div>
                     <Button
@@ -93,10 +107,12 @@ const Navbar = () => {
                         <Link to="/institutions" style={{ textDecoration: 'none' }}>
                             <MenuItem onClick={handleClose}>Dependencias</MenuItem>
                         </Link>
-                        <MenuItem onClick={handleClose}>Temas</MenuItem>
+                        <Link to="/issue" style={{ textDecoration: 'none' }}>
+                            <MenuItem onClick={handleClose}>Temas</MenuItem>
+                        </Link>
+
                     </Menu>
                 </div>
-
             </div>
 
             <div className='search-box' style={{ backgroundColor: '#691C32', padding: '10px 20px', borderRadius: '50px', display: 'flex', alignItems: 'center' }}>
