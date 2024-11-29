@@ -1,7 +1,7 @@
 import './Data.css';
 
 import React, { useState, useEffect } from 'react';
-import { temas, dependencias, customTheme } from './Dataoptions';
+import { customTheme } from './Dataoptions';
 import { TextField, Grid, Button } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -74,7 +74,6 @@ const Data = () => {
     fetchData()
       .catch(console.error);
   }, []);
-  console.log("Dependencias: ", institutions);
 
   useEffect(() => {
     if (!loading && institutions.length > 0) {
@@ -178,7 +177,7 @@ const Data = () => {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={dependencias}
+          options={institutions}
           freeSolo
           sx={{ width: '80%' }}
           renderInput={(params) => <TextField {...params} label="Dependencia de Turno" />}
@@ -438,7 +437,6 @@ const Data = () => {
                       disablePortal
                       id="combo-box-demo"
                       options={issues}
-                      freeSolo
                       sx={{ width: 300 }}
                       renderInput={(params) =>
                         <TextField

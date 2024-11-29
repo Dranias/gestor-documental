@@ -34,8 +34,13 @@ const Search = () => {
     const outerTheme = useTheme();
 
     useEffect(() => {
-        setData(searchResults);
-        setLastIndex(0);
+        if (Array.isArray(searchResults) && searchResults.length > 0) {
+            setData(searchResults);
+            setLastIndex(0);
+        } else {
+            setData([]);
+            setLastIndex(null);
+        }
     }, [searchResults]);
 
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -152,7 +157,7 @@ const Search = () => {
                                         id="outlined-basic"
                                         label="FOLIO"
                                         variant="outlined"
-                                        value={data[currentIndex].folio}
+                                        value={data[currentIndex]?.folio || ''}
                                     />
                                 </Box>
                             </Grid>
@@ -169,7 +174,7 @@ const Search = () => {
                                         id="outlined-basic"
                                         label="HORA"
                                         variant="outlined"
-                                        value={data[currentIndex].time}
+                                        value={data[currentIndex]?.time || 'N/A'}
                                     />
                                 </Box>
                             </Grid>
@@ -186,7 +191,11 @@ const Search = () => {
                                         id="outlined-basic"
                                         label="FECHA"
                                         variant="outlined"
-                                        value={new Date(data[currentIndex].date).toLocaleDateString()}
+                                        value={
+                                            data[currentIndex]?.date
+                                                ? new Date(data[currentIndex].date).toLocaleDateString()
+                                                : "Fecha no disponible"
+                                        }
                                     />
                                 </Box>
                             </Grid>
@@ -203,7 +212,7 @@ const Search = () => {
                                         id="outlined-basic"
                                         label="TEMA"
                                         variant="outlined"
-                                        value={data[currentIndex].issue}
+                                        value={data[currentIndex]?.issue || 'N/A'}
                                     />
                                 </Box>
                             </Grid>
@@ -218,13 +227,17 @@ const Search = () => {
                                     marginBottom: 2,
                                 }}>
                                     <TextField
-                                        InputProps={{ readOnly: true }}
-                                        id="outlined-basic"
-                                        label="NOMBRE"
-                                        variant="outlined"
-                                        style={{ width: "100%" }}
-                                        value={data[currentIndex].name}
-                                    />
+                                    InputProps={{ readOnly: true }}
+                                    id="outlined-basic"
+                                    label="NOMBRE"
+                                    variant="outlined"
+                                    style={{ width: "100%" }}
+                                    value={
+                                        data[currentIndex]?.name
+                                            ? data[currentIndex].name
+                                            : "Nombre no disponible"
+                                    }
+                                />
                                 </Box>
 
                                 {/* OPG y dependencia */}

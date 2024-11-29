@@ -3,7 +3,7 @@ import './UpdateData.css';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RotatingLines } from 'react-loader-spinner';
-import { customTheme } from '../Data/Dataoptions';
+import { temas, dependencias, customTheme } from '../Data/Dataoptions';
 import { TextField, Grid, Button } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -21,25 +21,6 @@ import minus from '../../assets/minus.png';
 import plus from '../../assets/plus.png';
 
 const UpdateData = () => {
-
-    const [institutions, setDependencias] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INSTITUTIONS;
-            const response = await axios.get(apiUrl);
-            const dependenciasData = response.data.map(item => ({ label: item.institution }));
-            setDependencias(dependenciasData);
-            setLoading(false);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-        fetchData();
-      }, []);
-
-
     const { id } = useParams();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -47,7 +28,7 @@ const UpdateData = () => {
     const [folioValue, setFolioValue] = useState('');
     const [timeValue, settimeValue] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
-    const [selectedissue, setSelectedissue] = useState(institutions[0]);
+    const [selectedissue, setSelectedissue] = useState(temas[0]);
     const [nameValue, setNameValue] = useState('');
     const [selectedInstitution, setSelectedInstitution] = useState(null)
     const [OPGs, setOPGs] = useState([]);
@@ -60,7 +41,6 @@ const UpdateData = () => {
     const [errorSnackbarOpen, setErrorSnackbarOpen] = React.useState(false);
     const [openDialogs, setOpenDialog] = React.useState(false);
     const [opgId, setOpgId] = useState('');
-    const [issues, setIssues] = useState([]);
 
     const navigate = useNavigate();
 
@@ -134,17 +114,6 @@ const UpdateData = () => {
 
         fetchData();
     }, [id]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-          const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_ISSUE;
-          const response = await axios.get(apiUrl);
-          const issueData = await response.data.map(item => ({ label: item.issue }));
-          setIssues(issueData);
-        };
-        fetchData()
-          .catch(console.error);
-      }, []);
 
     if (loading) {
         return <div>
@@ -348,7 +317,7 @@ const UpdateData = () => {
                         <Autocomplete
                             disablePortal
                             id="combo-box-demo"
-                            options={issues}
+                            options={temas}
                             freeSolo
                             sx={{ width: 300 }}
                             renderInput={(params) => (
@@ -407,7 +376,7 @@ const UpdateData = () => {
                                 <Autocomplete
                                     disablePortal
                                     id={`combo-box-demo-${index}`}
-                                    options={institutions}
+                                    options={dependencias}
                                     freeSolo
                                     sx={{ width: 600 }}
                                     renderInput={(params) => (
