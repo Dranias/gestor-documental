@@ -1,4 +1,4 @@
-import "./Institutions.css";
+import "./Agenda.css";
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import trash from '../../assets/trash.png';
@@ -6,9 +6,9 @@ import Box from '@mui/material/Box';
 import { Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { customTheme } from '../Datadisplay/Datadisplayoptions';
-import ModalInstitution from '../Institutions/ModalInstitution';
+import ModalAgenda from '../Agenda/ModalAgenda';
 
-const Institutions = ({ deleteRow, editRow }) => {
+const Agenda = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -18,7 +18,7 @@ const Institutions = ({ deleteRow, editRow }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_INSTITUTIONS;
+                const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_GET_ALL_AGENDA;
                 const response = await axios.get(apiUrl);
 
                 const sortedData = Array.isArray(response.data)
@@ -45,18 +45,13 @@ const Institutions = ({ deleteRow, editRow }) => {
     };
     const handleCloseConfirm = () => setConfirmOpen(false);
 
-    const addInstitution = (name) => {
-        const newInstitution = {
-            id: data.length + 1,
-            institution: name,
-            createdAt: new Date().toISOString(),
-        };
-        setData([newInstitution, ...data]);
+    const addAgenda = (agenda) => {
+        setData([agenda, ...data]);
     };
 
-    const deleteInstitutionById = async (id) => {
+    const deleteAgendaById = async (id) => {
         try {
-            const apiUrl = `${import.meta.env.VITE_REACT_APP_GESTOR_APP_INSTITUTION_DELETE}/${id}`;
+            const apiUrl = `${import.meta.env.VITE_REACT_APP_GESTOR_APP_AGENDA_DELETE}/${id}`;
             await axios.delete(apiUrl);
             setData(data.filter((institution) => institution.id !== id));
             handleCloseConfirm();
@@ -67,7 +62,7 @@ const Institutions = ({ deleteRow, editRow }) => {
 
     const confirmDelete = () => {
         if (selectedId) {
-            deleteInstitutionById(selectedId);
+            deleteAgendaById(selectedId);
         }
     };
 
@@ -86,7 +81,7 @@ const Institutions = ({ deleteRow, editRow }) => {
                             }}
                         >
                             <button className="button" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleOpenModal}>
-                                Nuevo
+                                Agregar
                             </button>
                         </Box>
                     </Grid>
@@ -94,17 +89,23 @@ const Institutions = ({ deleteRow, editRow }) => {
                 <div>
                     <br />
                 </div>
-                <table className="table">
+                <table className="tablaAgenda">
                     <thead>
                         <tr>
-                            <th className="expand">Dependencias</th>
-                            <th>Eliminar</th>
+                            <th style={{ width: '30%' }}>Titular</th>
+                            <th style={{ width: '30%' }}>Cargo</th>
+                            <th style={{ width: '20%' }}>Dirección</th>
+                            <th style={{ width: '20%' }}>Teléfono</th>
+                            <th style={{ width: 'auto' }}>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.length > 0 ? data.map((row) => (
                             <tr key={row.id}>
-                                <td className="expand">{row.institution}</td>
+                                <td>{row.name}</td>
+                                <td>{row.position}</td>
+                                <td>{row.adress}</td>
+                                <td>{row.phone}</td>
                                 <td className="fit">
                                     <span className="actions">
                                         <button
@@ -118,12 +119,12 @@ const Institutions = ({ deleteRow, editRow }) => {
                             </tr>
                         )) : (
                             <tr>
-                                <td colSpan="2">Loading...</td>
+                                <td colSpan="2">Sin datos...</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
-                <ModalInstitution open={modalOpen} handleClose={handleCloseModal} addInstitution={addInstitution} />
+                <ModalAgenda open={modalOpen} handleClose={handleCloseModal} addAgenda={addAgenda} />
 
                 <Dialog
                     open={confirmOpen}
@@ -140,10 +141,10 @@ const Institutions = ({ deleteRow, editRow }) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCloseConfirm} style={{ backgroundColor: '#AFA5A2'}}>
+                        <Button onClick={handleCloseConfirm} style={{ backgroundColor: '#AFA5A2' }}>
                             Cancelar
                         </Button>
-                        <Button onClick={confirmDelete} style={{ backgroundColor: '#691C32'}} autoFocus>
+                        <Button onClick={confirmDelete} style={{ backgroundColor: '#691C32' }} autoFocus>
                             Eliminar
                         </Button>
                     </DialogActions>
@@ -153,4 +154,4 @@ const Institutions = ({ deleteRow, editRow }) => {
     );
 };
 
-export default Institutions;
+export default Agenda;

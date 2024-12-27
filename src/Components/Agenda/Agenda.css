@@ -1,0 +1,48 @@
+.table-wrapper {
+  width: 100%;
+}
+
+.tablaAgenda {
+  display: block;
+  overflow: hidden;
+  table-layout: fixed;
+  border-collapse: collapse;
+  box-shadow: 0px 10px 10px #000000;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 90%;
+  margin: auto;
+  overflow-x: auto;
+}
+
+.tablaAgenda thead {
+  background-color: rgb(175, 170, 157);
+  color: #222;
+}
+
+.tablaAgenda th,
+.tablaAgenda td {
+  padding: 0.8rem;
+  text-align: left;
+  border: 1px solid #011112;
+  /* Asegura líneas divisorias visibles */
+  word-wrap: break-word;
+  /* Permite que el texto se ajuste */
+  white-space: normal;
+  /* Permite que el texto ocupe varias líneas */
+}
+
+.tablaAgenda td {
+  border-top: 0.5px solid #ddd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tablaAgenda tbody tr:hover {
+  background-color: #691C32;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+}

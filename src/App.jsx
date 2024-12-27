@@ -11,6 +11,7 @@ import CheckList from './Components/CheckList/CheckList';
 import Institutions from './Components/Institutions/Institutions'
 import Invitations from './Components/Invitations/InvitationsList'
 import Issue from './Components/Issue/Issue'
+import Agenda from './Components/Agenda/Agenda';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/institutions" element={<Institutions />} />
           <Route path="/invitations" element={<Invitations />} />
           <Route path="/issue" element={<Issue />} />
+          <Route path="/agenda" element={<Agenda />} />
         </Routes>
       </div>
     </Router>

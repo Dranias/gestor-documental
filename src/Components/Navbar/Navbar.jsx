@@ -77,9 +77,9 @@ const Navbar = () => {
                         Lista
                     </Button>
                 </Link>
-                <Link to="/invitations" style={{ textDecoration: 'none' }}>
+                <Link to="/agenda" style={{ textDecoration: 'none' }}>
                     <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}>
-                        Invitaciones
+                        Agenda
                     </Button>
                 </Link>
 
