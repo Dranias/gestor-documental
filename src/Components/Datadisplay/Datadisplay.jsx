@@ -79,14 +79,14 @@ const Datadisplay = () => {
                 Nombre: data[currentIndex].name,
 
                 NumDoc: Array.isArray(data[currentIndex].docNumber)
-                    ? data[currentIndex].docNumber.map(doc => `OPG/${doc}/2024`).join(', ')
-                    : `OPG/${data[currentIndex].docNumber}/2024`,
+                    ? data[currentIndex].docNumber.map(doc => `OPE/${doc}/2024`).join(', ')
+                    : `OPE/${data[currentIndex].docNumber}/2024`,
 
                 SOLICITUD: data[currentIndex].description,
 
                 DEPENDENCIA: Array.isArray(data[currentIndex].docNumber)
-                    ? data[currentIndex].docNumber.map((doc, index) => `OPG/${doc}/2024: ${data[currentIndex].institution[index]}`).join('\n')
-                    : `OPG/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
+                    ? data[currentIndex].docNumber.map((doc, index) => `OPE/${doc}/2024: ${data[currentIndex].institution[index]}`).join('\n')
+                    : `OPE/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
 
                 FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
 
@@ -116,9 +116,6 @@ const Datadisplay = () => {
             <ThemeProvider theme={customTheme(outerTheme)}>
                 {Array.isArray(data) && data.length > 0 ? (
                     <div className="content-container">
-                        <div className="title">
-                            <h1>Registros</h1>
-                        </div>
                         <Grid container className='grid'>
                             <Grid item>
                                 <Box component="section"

@@ -308,10 +308,6 @@ const UpdateData = () => {
 
     return (
         <div>
-            <div className="title">
-                <h1>Modificar datos</h1>
-            </div>
-
             <div className="content-container">
                 <Grid container className='grid' >
                     <Grid item>
@@ -387,13 +383,12 @@ const UpdateData = () => {
                 <div style={{ width: '95%', marginLeft: '90px' }} >
                     {data.docNumber && data.docNumber.map((num, index) => (
                         <div className='container-opg' key={index}>
-                            <h1>OPG/</h1>
                             <TextField
                                 id={`outlined-basic-${index}`}
-                                label="OPG"
+                                label="OPE"
                                 variant="outlined"
                                 style={{
-                                    width: '70px',
+                                    width: '100px',
                                 }}
                                 value={num}
                                 //llamarlo desde aquí exactamente a handleOpgChange con algo similar a ngoninit 
@@ -401,15 +396,13 @@ const UpdateData = () => {
                                     handleOpgChange(index, e.target.value);
                                 }}
                             />
-                            <h1>/2024</h1>
-                            <h1>Dependencia: </h1>
-                            <div style={{ display: 'flex', alignItems: 'center', width: '800px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', width: '1000px' }}>
                                 <Autocomplete
                                     disablePortal
                                     id={`combo-box-demo-${index}`}
                                     options={institutions}
                                     freeSolo
-                                    sx={{ width: 600 }}
+                                    sx={{ width: 800 }}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -422,18 +415,6 @@ const UpdateData = () => {
                                         handleDependenciaChange(index, newValue);
                                     }}
                                 />
-
-                                {data.docNumber.length === index + 1 && (
-                                    <button style={{ width: '50px', height: '50px', backgroundColor: 'transparent', border: 'none' }} onClick={() => addOPG()} >
-                                        <img src={plus} style={{ height: '80%' }} />
-                                    </button>
-                                )}
-
-                                {data.docNumber.length > 1 && (
-                                    <button style={{ width: '50px', height: '50px', backgroundColor: 'transparent', border: 'none' }} onClick={() => deleteOPG(index)} >
-                                        <img src={minus} alt="Eliminar" style={{ height: '80%' }} />
-                                    </button>
-                                )}
                             </div>
                         </div>
                     ))}

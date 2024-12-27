@@ -87,7 +87,7 @@ const Data = () => {
     <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
       <TextField
         id={`outlined-basic-${index}`}
-        label="OPG"
+        label="OPE"
         variant="outlined"
         style={{
           width: '8.8%',
@@ -164,11 +164,11 @@ const Data = () => {
       <div key={0} style={{ display: 'flex', alignItems: 'center' }}>
         <TextField
           id={`outlined-basic-${0}`}
-          label="OPG"
+          label="OPE"
           variant="outlined"
           style={{
             width: '8.8%',
-            marginRight: '10px',
+            marginRight: '20px',
           }}
           onChange={(e) => {
             handleOpgChange(contador, e.target.value);
@@ -338,7 +338,7 @@ const Data = () => {
           const errorMessage = error.response.data.message;
           if (errorMessage === 'El número de documento ya existe' && error.response.status === 400) {
             setdialogTitle("Error al enviar los datos");
-            setdialogMessage("Número de OPG ya existe en la base de datos.");
+            setdialogMessage("Número de OPE ya existe en la base de datos.");
             openDialog();
           } else {
             setErrorSnackbarOpen(true);
@@ -356,7 +356,7 @@ const Data = () => {
       <ThemeProvider theme={customTheme(outerTheme)}>
         <div>
           <div className="title">
-            <h1>Formulario de registro</h1>
+            <h1></h1>
           </div>
 
           <div className="content-container">
@@ -498,7 +498,7 @@ const Data = () => {
 
           <div className='container-opg' >
             <Box component="section"
-              style={{ width: '100%' }}
+              style={{ width: '75%' }}
               sx={{
                 p: 2, border: 1,
                 bgcolor: 'primary.nofocus',
@@ -528,7 +528,7 @@ const Data = () => {
                   },
                 }}
               >
-                <Typography variant="h6" style={{ color: '#691C32', marginLeft: '20px' }}>
+                <Typography style={{ color: '#691C32', marginLeft: '20px' }}>
                   Asunto:
                 </Typography>
 

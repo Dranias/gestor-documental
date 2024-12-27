@@ -9,7 +9,7 @@ import { useSearch } from '../../SearchContext';
 
 import Tooltip from '@mui/material/Tooltip';
 import search_icon_light from '../../assets/search-w.png';
-import gobierno_presente from '../../assets/gobierno-presente.jpg';
+import gobierno_presente from '../../assets/gobierno-presente.png';
 import axios from 'axios';
 
 const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_SEARCH;
