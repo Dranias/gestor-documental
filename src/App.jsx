@@ -8,16 +8,19 @@ import Dataperindex from './Components/DataPerIndex/DataPerIndex';
 import SearchData from './Components/Search/Search';
 import UpdateData from './Components/UpdateData/UpdateData';
 import CheckList from './Components/CheckList/CheckList';
-import Institutions from './Components/Institutions/Institutions'
-import Invitations from './Components/Invitations/InvitationsList'
-import Issue from './Components/Issue/Issue'
+import Institutions from './Components/Institutions/Institutions';
+import Invitations from './Components/Invitations/InvitationsList';
+import Issue from './Components/Issue/Issue';
 import Agenda from './Components/Agenda/Agenda';
+
+import Alerts from './Components/Alerts/Alerts';  // Asegúrate de importar el componente Alerts
 
 const App = () => {
   return (
     <Router>
       <div className='container'>
         <Navbar />
+        <Alerts />
         <Routes>
           <Route path="/data" element={<Data />} />
           <Route path="/datadisplay" element={<Datadisplay />} />
