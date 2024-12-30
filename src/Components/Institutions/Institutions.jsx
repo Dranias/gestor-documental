@@ -3,10 +3,13 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import trash from '../../assets/trash.png';
 import Box from '@mui/material/Box';
+import ModalInstitution from '../Institutions/ModalInstitution';
+
 import { Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { customTheme } from '../Datadisplay/Datadisplayoptions';
-import ModalInstitution from '../Institutions/ModalInstitution';
+import { io } from "socket.io-client";
+import { useSnackbar } from "../SnackbarContext/SnackbarContext";  // Importar el hook
 
 const Institutions = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);
@@ -14,6 +17,37 @@ const Institutions = ({ deleteRow, editRow }) => {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
     const outerTheme = useTheme();
+
+    // Usar el hook de Snackbar
+    const { showSnackbar } = useSnackbar();  // Llamar a la función de Snackbar
+
+    useEffect(() => {
+        // Conectar con el servidor de Socket.IO
+        const socket = io(import.meta.env.VITE_REACT_APP_SOCKET_SERVER_URL);
+
+        // Verificar conexión con un log
+        socket.on('connect', () => {
+            console.log('Conectado al servidor WebSocket');
+        });
+
+        // Escuchar el evento 'institution-added' del servidor
+        socket.on('institution-added', (newInstitution) => {
+            console.log('Nuevo institution recibido:', newInstitution); // Verificar si recibes los datos
+            setData((prevData) => [newInstitution, ...prevData]); // Actualiza el estado con el nuevo issue
+            // Establecer el mensaje y mostrar el Snackbar usando el contexto
+            showSnackbar(`Fue agregado el tema "${newInstitution.institution}"`);
+        });
+
+        // Verificar si ocurre un error
+        socket.on('connect_error', (err) => {
+            console.error('Error de conexión a WebSocket:', err);
+        });
+
+        // Cleanup al desmontar el componente
+        return () => {
+            socket.disconnect();
+        };
+    }, [showSnackbar]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +63,6 @@ const Institutions = ({ deleteRow, editRow }) => {
                     })
                     : [response.data];
                 setData(sortedData);
-                console.log(sortedData);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -140,10 +173,10 @@ const Institutions = ({ deleteRow, editRow }) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCloseConfirm} style={{ backgroundColor: '#AFA5A2'}}>
+                        <Button onClick={handleCloseConfirm} style={{ backgroundColor: '#AFA5A2' }}>
                             Cancelar
                         </Button>
-                        <Button onClick={confirmDelete} style={{ backgroundColor: '#691C32'}} autoFocus>
+                        <Button onClick={confirmDelete} style={{ backgroundColor: '#691C32' }} autoFocus>
                             Eliminar
                         </Button>
                     </DialogActions>

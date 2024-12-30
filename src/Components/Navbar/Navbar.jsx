@@ -1,16 +1,18 @@
 import './Navbar.css';
-import React, { useState } from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem'
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useSearch } from '../../SearchContext';
 
 import Tooltip from '@mui/material/Tooltip';
 import search_icon_light from '../../assets/search-w.png';
 import gobierno_presente from '../../assets/gobierno-presente.png';
 import axios from 'axios';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem'
+
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSearch } from '../../SearchContext';
+import { useSnackbar } from '../../Components/SnackbarContext/SnackbarContext';
 
 const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_SEARCH;
 
@@ -18,6 +20,9 @@ const Navbar = () => {
     const { setSearchResults } = useSearch();
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(null);
+
+    // Obtener las funciones del contexto
+    const { showSnackbar } = useSnackbar();
 
     const goToMain = () => {
         navigate('/');
@@ -31,13 +36,6 @@ const Navbar = () => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleClickInvitations = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleCloseInvitations = () => {
         setAnchorEl(null);
     };
 

@@ -1,5 +1,3 @@
-import "./Issue.css";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import trash from "../../assets/trash.png";
@@ -10,14 +8,15 @@ import { Grid } from "@mui/material";
 import { ThemeProvider, useTheme } from "@mui/material/styles";
 import { customTheme } from "../Datadisplay/Datadisplayoptions";
 import { io } from "socket.io-client";
-import { Snackbar, SnackbarContent } from '@mui/material';
+import { useSnackbar } from "../SnackbarContext/SnackbarContext";  // Importar el hook
 
 const Issue = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const outerTheme = useTheme();
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    // Usar el hook de Snackbar
+    const { showSnackbar } = useSnackbar();  // Llamar a la función de Snackbar
 
     useEffect(() => {
         // Conectar con el servidor de Socket.IO
@@ -32,9 +31,8 @@ const Issue = ({ deleteRow, editRow }) => {
         socket.on('issue-added', (newIssue) => {
             console.log('Nuevo issue recibido:', newIssue); // Verificar si recibes los datos
             setData((prevData) => [newIssue, ...prevData]); // Actualiza el estado con el nuevo issue
-            // Establecer el mensaje y abrir el Snackbar
-            setSnackbarMessage(`Fue agregado el tema "${newIssue.issue}"`);
-            setSnackbarOpen(true);
+            // Establecer el mensaje y mostrar el Snackbar usando el contexto
+            showSnackbar(`Fue agregado el tema "${newIssue.issue}"`);
         });
 
         // Verificar si ocurre un error
@@ -46,7 +44,7 @@ const Issue = ({ deleteRow, editRow }) => {
         return () => {
             socket.disconnect();
         };
-    }, []);
+    }, [showSnackbar]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -147,21 +145,6 @@ const Issue = ({ deleteRow, editRow }) => {
                     </tbody>
                 </table>
                 <ModalIssue open={modalOpen} handleClose={handleCloseModal} addInstitution={addInstitution} />
-                {/* Snackbar para mostrar mensaje cuando se agregue un nuevo tema */}
-                <Snackbar
-                    open={snackbarOpen}
-                    autoHideDuration={6000}
-                    onClose={() => setSnackbarOpen(false)}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                >
-                    <SnackbarContent
-                        message={snackbarMessage}
-                        style={{
-                            backgroundColor: '#4caf50', // Green background for success
-                            color: '#fff', // White text
-                        }}
-                    />
-                </Snackbar>
             </ThemeProvider>
         </div>
     );

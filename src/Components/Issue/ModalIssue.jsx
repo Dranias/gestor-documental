@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Box, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { io } from "socket.io-client";
 
 import axios from 'axios';
 import Dialog from '@mui/material/Dialog';
@@ -27,21 +26,6 @@ const ModalIssue = ({ open, handleClose }) => {
     const navigate = useNavigate();
 
     const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_ISSUE_POST;
-
-    const socket = io(import.meta.env.VITE_REACT_APP_SOCKET_SERVER_URL); // Asegúrate de tener esta URL configurada correctamente
-
-    useEffect(() => {
-        // Escuchar el evento 'issue-added' del servidor
-        socket.on('issue-added', (newIssue) => {
-            addIssue(newIssue);  // Actualizamos el estado de issues en el componente padre
-            console.log('Nuevo Issue recibido:', newIssue);
-        });
-
-        // Limpiar el socket cuando el componente se desmonte
-        return () => {
-            socket.off('issue-added');
-        };
-    }, [socket]);
 
     const handleErrorSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -80,7 +64,6 @@ const ModalIssue = ({ open, handleClose }) => {
                     setdialogTitle("Agregado existoso");
                     setdialogMessage("Datos agregados correctamente");
                     openDialog();
-                    socket.emit("issue-added", newData);
                 }
                 navigate(`/issue`);
             })

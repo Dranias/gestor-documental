@@ -9,6 +9,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useNavigate } from 'react-router-dom';
+import { io } from "socket.io-client";
+import { useSnackbar } from "../SnackbarContext/SnackbarContext";  // Importar el hook
 
 import axios from 'axios';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -48,6 +50,37 @@ const Data = () => {
   const [loading, setLoading] = useState(true);
 
   const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_POST;
+
+  // Usar el hook de Snackbar
+  const { showSnackbar } = useSnackbar();  // Llamar a la función de Snackbar
+
+  useEffect(() => {
+    // Conectar con el servidor de Socket.IO
+    const socket = io(import.meta.env.VITE_REACT_APP_SOCKET_SERVER_URL);
+
+    // Verificar conexión con un log
+    socket.on('connect', () => {
+      console.log('Conectado al servidor WebSocket');
+    });
+
+    // Escuchar el evento 'institution-added' del servidor
+    socket.on('data-added', (newData) => {
+      console.log('Nuevo OPE recibido:', newData); // Verificar si recibes los datos
+      setOPGs((prevData) => [newData, ...prevData]); // Actualiza el estado con el nuevo issue
+      // Establecer el mensaje y mostrar el Snackbar usando el contexto
+      showSnackbar(`Fue agregado el OPE "${newData.docNumber}"`);
+    });
+
+    // Verificar si ocurre un error
+    socket.on('connect_error', (err) => {
+      console.error('Error de conexión a WebSocket:', err);
+    });
+
+    // Cleanup al desmontar el componente
+    return () => {
+      socket.disconnect();
+    };
+  }, [showSnackbar]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -360,105 +393,105 @@ const Data = () => {
           </div>
 
           <div className="content-container">
-              <Grid container className='grid' >
-                <Grid item>
-                  <Box component="section"
-                    sx={{
-                      p: 2, border: 1,
-                      bgcolor: 'primary.nofocus',
-                      '&:hover': {
-                        bgcolor: 'primary.dark',
-                      },
-                    }}
-                  >
-                    <TextField
-                      id="outlined-basic"
-                      label="Folio"
-                      variant="outlined"
-                      value={folioValue}
-                      onChange={(e) => setFolioValue(e.target.value)}
-                    />
-                  </Box>
-                </Grid>
-
-                <Grid item>
-                  <Box component="section"
-                    sx={{
-                      p: 2, border: 1,
-                      bgcolor: 'primary.nofocus',
-                      '&:hover': {
-                        bgcolor: 'primary.dark',
-                      },
-                    }}
-                  >
-                    <TextField
-                      id="outlined-basic"
-                      label="Hora"
-                      variant="outlined"
-                      value={timeValue}
-                      onChange={(e) => settimeValue(e.target.value)} />
-                  </Box>
-                </Grid>
-
-                <Grid item>
-                  <Box component="section"
-                    sx={{
-                      p: 2, border: 1,
-                      bgcolor: 'primary.nofocus',
-                      '&:hover': {
-                        bgcolor: 'primary.dark',
-                      },
-                    }}
-                  >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['DatePicker']}>
-                        <DatePicker
-                          label="Fecha (MM/DD/AAAA)"
-                          value={selectedDate}
-                          onChange={(newValue) => setSelectedDate(newValue)}
-                          slotProps={{ textField: { variant: 'outlined' } }}
-                        />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Box>
-                </Grid>
-
-                <Grid item>
-                  <Box component="section"
-                    sx={{
-                      p: 2, border: 1,
-                      bgcolor: 'primary.nofocus',
-                      '&:hover': {
-                        bgcolor: 'primary.dark',
-                      },
-                    }}
-                  >
-                    <Autocomplete
-                      disablePortal
-                      id="combo-box-demo"
-                      options={issues}
-                      sx={{ width: 300 }}
-                      renderInput={(params) =>
-                        <TextField
-                          {...params}
-                          label="Tema"
-                          error={!isTemaValid}
-                          helperText={!isTemaValid ? 'El tema no puede estar vacío' : ''}
-                        />
-                      }
-                      onChange={(event, newValue) => {
-                        setSelectedissue(newValue);
-                        setIsTemaValid(true);
-                      }}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter') {
-                          handleConfirmIssue();
-                        }
-                      }}
-                    />
-                  </Box>
-                </Grid>
+            <Grid container className='grid' >
+              <Grid item>
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  }}
+                >
+                  <TextField
+                    id="outlined-basic"
+                    label="Folio"
+                    variant="outlined"
+                    value={folioValue}
+                    onChange={(e) => setFolioValue(e.target.value)}
+                  />
+                </Box>
               </Grid>
+
+              <Grid item>
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  }}
+                >
+                  <TextField
+                    id="outlined-basic"
+                    label="Hora"
+                    variant="outlined"
+                    value={timeValue}
+                    onChange={(e) => settimeValue(e.target.value)} />
+                </Box>
+              </Grid>
+
+              <Grid item>
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  }}
+                >
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker
+                        label="Fecha (MM/DD/AAAA)"
+                        value={selectedDate}
+                        onChange={(newValue) => setSelectedDate(newValue)}
+                        slotProps={{ textField: { variant: 'outlined' } }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </Box>
+              </Grid>
+
+              <Grid item>
+                <Box component="section"
+                  sx={{
+                    p: 2, border: 1,
+                    bgcolor: 'primary.nofocus',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  }}
+                >
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={issues}
+                    sx={{ width: 300 }}
+                    renderInput={(params) =>
+                      <TextField
+                        {...params}
+                        label="Tema"
+                        error={!isTemaValid}
+                        helperText={!isTemaValid ? 'El tema no puede estar vacío' : ''}
+                      />
+                    }
+                    onChange={(event, newValue) => {
+                      setSelectedissue(newValue);
+                      setIsTemaValid(true);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        handleConfirmIssue();
+                      }
+                    }}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
           </div>
 
           <div className="container-name" style={{ width: '75%' }}>
