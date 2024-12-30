@@ -1,22 +1,17 @@
 import './Search.css'
+import DownloadFile from '../DownloadFile/DownloadFile';
 
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { useSearch } from '../../SearchContext';
 import { Grid } from '@mui/material';
-import { saveAs } from 'file-saver';
 import { useNavigate } from 'react-router-dom';
 import { customTheme } from './Searchoptions';
 
-import axios from 'axios';
 import flechaDer from '../../assets/f-der.png';
 import flechaizq from '../../assets/f-izq.png';
-import butprint from '../../assets/imprimir.png';
 import notfound from '../../assets/product-not-found.png';
 import editar from '../../assets/editar-archivo.png';
-import plantilla from '../../assets/ti.docx'
-import PizZip from 'pizzip';
-import Docxtemplater from 'docxtemplater';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Pagination from '@mui/material/Pagination';
@@ -79,59 +74,6 @@ const Search = () => {
     const updateData = () => {
         navigate(`/updateData/${data[currentIndex]?.id}`);
     }
-
-    /* Aquí imprime el ti.docx de la posición actual */
-    const handleDownloadFile = async () => {
-        try {
-            const response = await axios.get(plantilla, {
-                responseType: 'arraybuffer',
-            });
-
-            const content = new Uint8Array(response.data);
-            const zip = new PizZip(content);
-            let doc;
-            const fechaFormateada = new Date(data[currentIndex].date).toLocaleDateString('es-ES');
-
-            try {
-                doc = new Docxtemplater(zip, { linebreaks: true });
-            } catch (error) {
-                console.error('Error al inicializar docxtemplater:', error);
-                return;
-            }
-
-            doc.setData({
-                Fecha: fechaFormateada,
-                Hora: `${data[currentIndex].time} horas`,
-                Nombre: data[currentIndex].name,
-                NumDoc: Array.isArray(data[currentIndex].docNumber)
-                    ? data[currentIndex].docNumber.map(doc => `OPE/${doc}/2024`).join(', ')
-                    : `OPE/${data[currentIndex].docNumber}/2024`,
-                SOLICITUD: data[currentIndex].description,
-                DEPENDENCIA: Array.isArray(data[currentIndex].docNumber)
-                    ? data[currentIndex].docNumber.map((doc, index) => `OPE/${doc}/2024: ${data[currentIndex].institution[index]}`).join('\n')
-                    : `OPE/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
-                FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
-                // OBSERVACIONES si no está vacío
-                OBSERVACIONES: data[currentIndex].notes ? `OBSERVACIONES\r\n${data[currentIndex].notes}` : '',
-            });
-
-            try {
-                doc.render();
-            } catch (error) {
-                console.error('Error al renderizar la plantilla:', error);
-                return;
-            }
-
-            const numDocNames = Array.isArray(data[currentIndex].docNumber)
-                ? data[currentIndex].docNumber.join('-')
-                : data[currentIndex].docNumber;
-
-            const updatedContent = doc.getZip().generate({ type: 'blob' });
-            saveAs(updatedContent, `ti-${numDocNames}.docx`);
-        } catch (error) {
-            console.error('Error al descargar el archivo:', error);
-        }
-    };
 
     return (
         <div>
@@ -404,9 +346,7 @@ const Search = () => {
                             <button style={{ width: '60px', height: '60px' }} onClick={updateData}>
                                 <img src={editar} alt="Editar" style={{ height: '70%' }} />
                             </button>
-                            <button style={{ width: '60px', height: '60px' }} onClick={handleDownloadFile}>
-                                <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
-                            </button>
+                            <DownloadFile data={data} currentIndex={currentIndex} />
                             <button style={{ width: '60px', height: '60px' }} onClick={handleForwardClick}>
                                 <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
                             </button>

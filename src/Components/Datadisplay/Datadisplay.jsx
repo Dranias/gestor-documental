@@ -1,8 +1,8 @@
 import './Datadisplay.css'
+import DownloadFile from '../DownloadFile/DownloadFile';
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { saveAs } from 'file-saver';
 import { Grid } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { customTheme } from './Datadisplayoptions';
@@ -10,14 +10,10 @@ import { customTheme } from './Datadisplayoptions';
 import axios from 'axios';
 import flechaDer from '../../assets/f-der.png';
 import flechaizq from '../../assets/f-izq.png';
-import butprint from '../../assets/imprimir.png';
 import editar from '../../assets/editar-archivo.png';
-import plantilla from '../../assets/ti.docx'
 import Box from '@mui/system/Box';
 import TextField from '@mui/material/TextField';
 import notfound from '../../assets/product-not-found.png';
-import PizZip from 'pizzip';
-import Docxtemplater from 'docxtemplater';
 import Tooltip from '@mui/material/Tooltip';
 
 const Datadisplay = () => {
@@ -51,65 +47,6 @@ const Datadisplay = () => {
     const updateData = () => {
         navigate(`/updateData/${data[currentIndex]?.id}`);
     }
-
-    const handleDownloadFile = async () => {
-        console.log(data[currentIndex].notes);
-        try {
-            const response = await axios.get(plantilla, {
-                responseType: 'arraybuffer',
-            });
-
-            const content = new Uint8Array(response.data);
-            const zip = new PizZip(content);
-            let doc;
-            const fechaFormateada = new Date(data[currentIndex].date).toLocaleDateString('es-ES');
-
-            try {
-                doc = new Docxtemplater(zip, { linebreaks: true });
-            } catch (error) {
-                console.error('Error al inicializar docxtemplater:', error);
-                return;
-            }
-
-            doc.setData({
-                Fecha: fechaFormateada,
-
-                Hora: `${data[currentIndex].time} horas`,
-
-                Nombre: data[currentIndex].name,
-
-                NumDoc: Array.isArray(data[currentIndex].docNumber)
-                    ? data[currentIndex].docNumber.map(doc => `OPE/${doc}/2024`).join(', ')
-                    : `OPE/${data[currentIndex].docNumber}/2024`,
-
-                SOLICITUD: data[currentIndex].description,
-
-                DEPENDENCIA: Array.isArray(data[currentIndex].docNumber)
-                    ? data[currentIndex].docNumber.map((doc, index) => `OPE/${doc}/2024: ${data[currentIndex].institution[index]}`).join('\n')
-                    : `OPE/${data[currentIndex].docNumber}/2024: ${data[currentIndex].institution}`,
-
-                FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
-
-                OBSERVACIONES: data[currentIndex].notes ? `OBSERVACIONES\r\n${data[currentIndex].notes}` : '',
-            });
-
-            try {
-                doc.render();
-            } catch (error) {
-                console.error('Error al renderizar la plantilla:', error);
-                return;
-            }
-
-            const numDocNames = Array.isArray(data[currentIndex].docNumber)
-                ? data[currentIndex].docNumber.join('-')
-                : data[currentIndex].docNumber;
-
-            const updatedContent = doc.getZip().generate({ type: 'blob' });
-            saveAs(updatedContent, `ti-${numDocNames}.docx`);
-        } catch (error) {
-            console.error('Error al descargar el archivo:', error);
-        }
-    };
 
     return (
         <div>
@@ -366,11 +303,7 @@ const Datadisplay = () => {
                                 <img src={editar} alt="Editar" style={{ height: '70%' }} />
                             </button >
                         </Tooltip>
-                        <Tooltip title="Imprimir ficha">
-                            <button style={{ width: '60px', height: '60px' }} onClick={handleDownloadFile}>
-                                <img src={butprint} alt="Imprimir" style={{ height: '70%' }} />
-                            </button>
-                        </Tooltip>
+                        <DownloadFile data={data} currentIndex={currentIndex} />
                         <Tooltip title="Siguente">
                             <button style={{ width: '60px', height: '60px' }} onClick={handleFowardClick}>
                                 <img src={flechaDer} alt="Flecha derecha" style={{ height: '70%' }} />
