@@ -16,13 +16,12 @@ const ModalAgenda = ({ open, handleClose }) => {
     const [personPosition, setpersonPosition] = useState('');
     const [institutionPhone, setInstitutionPhone] = useState('');
     const [institutionAddress, setInstitutionAddress] = useState('');
+    const [institutionEmail, setInstitutionEmail] = useState('');
     const [errorSnackbarOpen, setErrorSnackbarOpen] = React.useState(false);
     const [openDialogs, setOpenDialog] = React.useState(false);
     const [dialogMessage, setdialogMessage] = useState('');
     const [dialogTitle, setdialogTitle] = useState('');
     const [textareaError, setTextareaError] = useState(false);
-
-
 
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -66,6 +65,7 @@ const ModalAgenda = ({ open, handleClose }) => {
             position: personPosition,
             phone: institutionPhone,
             adress: institutionAddress,
+            email: institutionEmail,
         };
 
         // Limpiar el estado de error si la validación es exitosa
@@ -78,8 +78,13 @@ const ModalAgenda = ({ open, handleClose }) => {
                     setdialogTitle("Agregado existoso");
                     setdialogMessage("Datos agregados correctamente");
                     openDialog();
+
+                    // Redirigir y cerrar modal después del mensaje de éxito
+                    setTimeout(() => {
+                        console.log("Se actualiza agenda");
+                        handleClose();
+                    }, 1000); // Espera un segundo para permitir al usuario ver el diálogo
                 }
-                navigate(`/agenda`);
             })
             .catch(error => {
                 console.error('Error al enviar los datos:', error);
@@ -172,7 +177,6 @@ const ModalAgenda = ({ open, handleClose }) => {
                         variant="outlined"
                         style={{
                             width: "100%",
-                            borderColor: textareaError ? 'red' : '#ccc', // Cambiar el color del borde en caso de error
                         }}
                         value={institutionPhone}
                         onChange={(e) => {
@@ -189,11 +193,26 @@ const ModalAgenda = ({ open, handleClose }) => {
                         variant="outlined"
                         style={{
                             width: "100%",
-                            borderColor: textareaError ? 'red' : '#ccc', // Cambiar el color del borde en caso de error
                         }}
                         value={institutionAddress}
                         onChange={(e) => {
                             setInstitutionAddress(e.target.value);
+                            setTextareaError(false); // Limpiar el estado de error al cambiar el contenido
+                        }}
+                        sx={{ marginBottom: 2 }}
+                        spellCheck="true"
+                    />
+
+                    <TextField
+                        id="outlined-basic"
+                        label="Email"
+                        variant="outlined"
+                        style={{
+                            width: "100%",
+                        }}
+                        value={institutionEmail}
+                        onChange={(e) => {
+                            setInstitutionEmail(e.target.value);
                             setTextareaError(false); // Limpiar el estado de error al cambiar el contenido
                         }}
                         sx={{ marginBottom: 2 }}

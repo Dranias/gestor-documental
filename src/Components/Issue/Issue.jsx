@@ -1,10 +1,7 @@
 import "./Issue.css";
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import edit from '../../assets/edit.png';
 import trash from '../../assets/trash.png';
-import Tooltip from '@mui/material/Tooltip';
-import search_icon_light from '../../assets/search-w.png';
 import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
