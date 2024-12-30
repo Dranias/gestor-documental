@@ -40,7 +40,7 @@ const ModalAgendaEdit = ({ open, handleClose, editData }) => {
             name: personName,
             position: personPosition,
             phone: institutionPhone,
-            adress: institutionAddress,
+            address: institutionAddress,
             email: institutioEmail,
         };
 
