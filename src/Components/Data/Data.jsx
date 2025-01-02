@@ -51,37 +51,6 @@ const Data = () => {
 
   const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_POST;
 
-  // Usar el hook de Snackbar
-  const { showSnackbar } = useSnackbar();  // Llamar a la función de Snackbar
-
-  useEffect(() => {
-    // Conectar con el servidor de Socket.IO
-    const socket = io(import.meta.env.VITE_REACT_APP_SOCKET_SERVER_URL);
-
-    // Verificar conexión con un log
-    socket.on('connect', () => {
-      console.log('Conectado al servidor WebSocket');
-    });
-
-    // Escuchar el evento 'institution-added' del servidor
-    socket.on('data-added', (newData) => {
-      console.log('Nuevo OPE recibido:', newData); // Verificar si recibes los datos
-      setOPGs((prevData) => [newData, ...prevData]); // Actualiza el estado con el nuevo issue
-      // Establecer el mensaje y mostrar el Snackbar usando el contexto
-      showSnackbar(`Fue agregado el OPE "${newData.docNumber}"`);
-    });
-
-    // Verificar si ocurre un error
-    socket.on('connect_error', (err) => {
-      console.error('Error de conexión a WebSocket:', err);
-    });
-
-    // Cleanup al desmontar el componente
-    return () => {
-      socket.disconnect();
-    };
-  }, [showSnackbar]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

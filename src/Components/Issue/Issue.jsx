@@ -4,47 +4,16 @@ import trash from "../../assets/trash.png";
 import Box from "@mui/material/Box";
 import ModalIssue from "../Issue/ModalIssue";
 
-import { Grid } from "@mui/material";
+import { Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
 import { ThemeProvider, useTheme } from "@mui/material/styles";
 import { customTheme } from "../Datadisplay/Datadisplayoptions";
-import { io } from "socket.io-client";
-import { useSnackbar } from "../SnackbarContext/SnackbarContext";  // Importar el hook
 
 const Issue = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null); // Para la confirmación de eliminación
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false); // Control del diálogo de confirmación
     const outerTheme = useTheme();
-
-    // Usar el hook de Snackbar
-    const { showSnackbar } = useSnackbar();  // Llamar a la función de Snackbar
-
-    useEffect(() => {
-        // Conectar con el servidor de Socket.IO
-        const socket = io(import.meta.env.VITE_REACT_APP_SOCKET_SERVER_URL);
-
-        // Verificar conexión con un log
-        socket.on('connect', () => {
-            console.log('Conectado al servidor WebSocket');
-        });
-
-        // Escuchar el evento 'issue-added' del servidor
-        socket.on('issue-added', (newIssue) => {
-            console.log('Nuevo issue recibido:', newIssue); // Verificar si recibes los datos
-            setData((prevData) => [newIssue, ...prevData]); // Actualiza el estado con el nuevo issue
-            // Establecer el mensaje y mostrar el Snackbar usando el contexto
-            showSnackbar(`Fue agregado el tema "${newIssue.issue}"`);
-        });
-
-        // Verificar si ocurre un error
-        socket.on('connect_error', (err) => {
-            console.error('Error de conexión a WebSocket:', err);
-        });
-
-        // Cleanup al desmontar el componente
-        return () => {
-            socket.disconnect();
-        };
-    }, [showSnackbar]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,6 +46,35 @@ const Issue = ({ deleteRow, editRow }) => {
             createdAt: new Date().toISOString(),
         };
         setData([newInstitution, ...data]);
+    };
+
+    const handleDeleteClick = (row) => {
+        setSelectedRow(row);
+        setDeleteDialogOpen(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!selectedRow) return;
+
+        try {
+            const apiUrl = `${import.meta.env.VITE_REACT_APP_GESTOR_APP_ISSUE_DELETE}/${selectedRow.id}`;
+            await axios.delete(apiUrl);
+
+            // Actualizar los datos después de eliminar
+            setData((prevData) => prevData.filter((item) => item.id !== selectedRow.id));
+
+            console.log(`Issue con ID ${selectedRow.id} eliminado correctamente`);
+        } catch (error) {
+            console.error("Error eliminando el tema:", error);
+        }
+
+        setSelectedRow(null);
+        setDeleteDialogOpen(false);
+    };
+
+    const handleCancelDelete = () => {
+        setSelectedRow(null);
+        setDeleteDialogOpen(false);
     };
 
     return (
@@ -129,7 +127,7 @@ const Issue = ({ deleteRow, editRow }) => {
                                                     backgroundColor: "transparent",
                                                     border: "none",
                                                 }}
-                                                onClick={() => deleteRow(idx)}
+                                                onClick={() => handleDeleteClick(row)}
                                             >
                                                 <img src={trash} alt="Delete" style={{ height: "70%" }} />
                                             </button>
@@ -146,6 +144,24 @@ const Issue = ({ deleteRow, editRow }) => {
                 </table>
                 <ModalIssue open={modalOpen} handleClose={handleCloseModal} addInstitution={addInstitution} />
             </ThemeProvider>
+
+            {/* Diálogo de confirmación */}
+            <Dialog open={deleteDialogOpen} onClose={handleCancelDelete}>
+                <DialogTitle>Confirmación</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        ¿Estás seguro de que deseas eliminar este tema? Esta acción no se puede deshacer.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCancelDelete} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleConfirmDelete} color="secondary">
+                        Eliminar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };

@@ -12,7 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-const socket = io('http://localhost:3000', {
+const socket = io(import.meta.env.VITE_REACT_APP_SOCKET_SERVER_URL, {
   transports: ['websocket'], // Ajusta el puerto según tu servidor
 });
 
