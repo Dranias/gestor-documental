@@ -6,6 +6,7 @@ import gobierno_presente from '../../assets/gobierno-presente.png';
 import axios from 'axios';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem'
+import EditActorsModal from '../Actors/EditActorsModal';
 
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
@@ -17,6 +18,12 @@ import { useSnackbar } from '../../Components/SnackbarContext/SnackbarContext';
 const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_SEARCH;
 
 const Navbar = () => {
+
+    const [isActorsModalOpen, setIsActorsModalOpen] = useState(false);
+
+    const openActorsModal = () => setIsActorsModalOpen(true);
+    const closeActorsModal = () => setIsActorsModalOpen(false);
+
     const { setSearchResults } = useSearch();
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(null);
@@ -85,10 +92,6 @@ const Navbar = () => {
                     <Button
                         variant="contained" color="inherit"
                         style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
                         onClick={handleClick}
                     >
                         Datos
@@ -105,9 +108,14 @@ const Navbar = () => {
                         <Link to="/institutions" style={{ textDecoration: 'none' }}>
                             <MenuItem onClick={handleClose}>Dependencias</MenuItem>
                         </Link>
+
                         <Link to="/issue" style={{ textDecoration: 'none' }}>
                             <MenuItem onClick={handleClose}>Temas</MenuItem>
                         </Link>
+
+                        <MenuItem onClick={openActorsModal}>Colaboradores</MenuItem>
+
+                        <EditActorsModal open={isActorsModalOpen} onClose={closeActorsModal} />
 
                     </Menu>
                 </div>
