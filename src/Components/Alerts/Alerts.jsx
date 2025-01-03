@@ -77,6 +77,13 @@ const Alerts = () => {
             setAlertOpen(true);
         });
 
+        //Alertas para la entity Actors
+        socket.on("actor-patch", (data) => {
+            setAlertMessage(`Modificaciones realizadas en Colaboradores`);
+            setAlertSeverity("info");
+            setAlertOpen(true);
+        });
+
         // Limpiar la conexión cuando el componente se desmonte
         return () => {
             socket.disconnect();
