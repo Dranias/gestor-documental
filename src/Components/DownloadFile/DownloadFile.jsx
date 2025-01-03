@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { saveAs } from 'file-saver';
 import axios from 'axios';
 import PizZip from 'pizzip';
@@ -7,8 +7,41 @@ import plantilla from '../../assets/ti.docx';
 import butprint from '../../assets/imprimir.png';
 import Tooltip from '@mui/material/Tooltip';
 
+const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_ACTORS_UPDATE;
+
 const DownloadFile = React.memo(({ data, currentIndex }) => {
+
+    const [actorData, setActorData] = useState({ realiza: '', revisa: '', autoriza: '' });
+    const [loading, setLoading] = useState(false); // Para manejar el estado de carga
+
+    // Llamar a la API para obtener los datos de los actores
+    useEffect(() => {
+        fetchActorData();
+    }, []); // Se ejecuta una sola vez cuando el componente se monta
+
+    const fetchActorData = async () => {
+        setLoading(true); // Inicia la carga
+        try {
+            const response = await axios.get(apiUrl);
+            const { realiza, revisa, autoriza } = response.data.data; // Suponiendo que estos campos están en la respuesta
+            setActorData({
+                realiza: realiza || '',
+                revisa: revisa || '',
+                autoriza: autoriza || ''
+            });
+        } catch (error) {
+            console.error('Error al obtener los datos de los actores:', error);
+        } finally {
+            setLoading(false); // Finaliza la carga
+        }
+    };
+
     const handleDownloadFile = async () => {
+        if (loading) {
+            console.log('Cargando datos...');
+            return; // No proceder hasta que los datos estén cargados
+        }
+
         try {
             const response = await axios.get(plantilla, {
                 responseType: 'arraybuffer',
@@ -26,6 +59,9 @@ const DownloadFile = React.memo(({ data, currentIndex }) => {
                 return;
             }
 
+            const { realiza, revisa, autoriza } = actorData;
+            console.log("Datos:", realiza, revisa, autoriza); // Ahora debería mostrar los datos correctamente
+
             doc.setData({
                 Fecha: fechaFormateada,
                 Hora: `${data[currentIndex].time} horas`,
@@ -39,6 +75,9 @@ const DownloadFile = React.memo(({ data, currentIndex }) => {
                     : `OPE/${data[currentIndex].docNumber}/2025: ${data[currentIndex].institution}`,
                 FUNDAMENTO: data[currentIndex].legalBasis ? `FUNDAMENTO JURÍDICO\r\n${data[currentIndex].legalBasis}` : '',
                 OBSERVACIONES: data[currentIndex].notes ? `OBSERVACIONES\r\n${data[currentIndex].notes}` : '',
+                REALIZA: realiza,
+                REVISA: revisa,
+                AUTORIZA: autoriza 
             });
 
             try {

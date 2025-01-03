@@ -1,5 +1,4 @@
 import './Navbar.css';
-
 import Tooltip from '@mui/material/Tooltip';
 import search_icon_light from '../../assets/search-w.png';
 import gobierno_presente from '../../assets/gobierno-presente.png';
@@ -8,7 +7,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem'
 import EditActorsModal from '../Actors/EditActorsModal';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -18,8 +17,8 @@ import { useSnackbar } from '../../Components/SnackbarContext/SnackbarContext';
 const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_SEARCH;
 
 const Navbar = () => {
-
     const [isActorsModalOpen, setIsActorsModalOpen] = useState(false);
+    const modalRef = useRef(null); // Para hacer referencia al modal
 
     const openActorsModal = () => setIsActorsModalOpen(true);
     const closeActorsModal = () => setIsActorsModalOpen(false);
@@ -36,7 +35,6 @@ const Navbar = () => {
     };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [anchorElInvitations, setAnchorElInvitations] = React.useState(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -113,9 +111,15 @@ const Navbar = () => {
                             <MenuItem onClick={handleClose}>Temas</MenuItem>
                         </Link>
 
-                        <MenuItem onClick={openActorsModal}>Colaboradores</MenuItem>
-
-                        <EditActorsModal open={isActorsModalOpen} onClose={closeActorsModal} />
+                        {/* Evitar que el modal se cierre automáticamente */}
+                        <MenuItem
+                            onClick={(e) => {
+                                e.stopPropagation(); // Detener la propagación para evitar que el menú se cierre
+                                openActorsModal();  // Abrir el modal
+                            }}
+                        >
+                            Colaboradores
+                        </MenuItem>
 
                     </Menu>
                 </div>
@@ -132,6 +136,13 @@ const Navbar = () => {
                 </Tooltip>
                 <img src={search_icon_light} alt="" />
             </div>
+
+            {/* Modal de Edición */}
+            <EditActorsModal
+                open={isActorsModalOpen}
+                onClose={closeActorsModal}
+                modalRef={modalRef} // Enviar la referencia al modal
+            />
         </div>
     );
 };
