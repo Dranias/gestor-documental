@@ -111,9 +111,10 @@ const Navbar = () => {
                             <MenuItem onClick={handleClose}>Temas</MenuItem>
                         </Link>
 
-                        {/* Evitar que el modal se cierre automáticamente */}
                         <MenuItem
                             onClick={(e) => {
+                                {/* Evitar que el modal se cierre automáticamente. Esto solucinó un error que al abrir el modal y cambiar entre 
+                                    texfields con tabulador, se cerrará*/}
                                 e.stopPropagation(); // Detener la propagación para evitar que el menú se cierre
                                 openActorsModal();  // Abrir el modal
                             }}
@@ -126,7 +127,7 @@ const Navbar = () => {
             </div>
 
             <div className='search-box' style={{ backgroundColor: '#691C32', padding: '10px 20px', borderRadius: '50px', display: 'flex', alignItems: 'center' }}>
-                <Tooltip title={"Busqueda por Nombre o Número de OPG"} placement="top">
+                <Tooltip title={"Busqueda por nombre o número de OPE"} placement="top">
                     <input
                         type="text"
                         placeholder='Buscar'

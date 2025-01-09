@@ -130,7 +130,7 @@ const ModalAgenda = ({ open, handleClose }) => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 400,
+            width: 700,
             bgcolor: 'background.paper',
             border: '2px solid #000',
             boxShadow: 24,
@@ -140,6 +140,8 @@ const ModalAgenda = ({ open, handleClose }) => {
           <TextField
             label="Nombre del titular"
             variant="outlined"
+            multiline
+            rows={2}
             style={{
               width: '100%',
               borderColor: textareaError ? 'red' : '#ccc',
@@ -154,6 +156,8 @@ const ModalAgenda = ({ open, handleClose }) => {
           <TextField
             label="Cargo"
             variant="outlined"
+            multiline
+            rows={3}
             style={{
               width: '100%',
               borderColor: textareaError ? 'red' : '#ccc',
@@ -168,6 +172,8 @@ const ModalAgenda = ({ open, handleClose }) => {
           <TextField
             label="Dirección"
             variant="outlined"
+            multiline
+            rows={3}
             style={{ width: '100%' }}
             value={institutionAddress}
             onChange={(e) => setInstitutionAddress(e.target.value)}

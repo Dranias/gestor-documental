@@ -9,8 +9,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useNavigate } from 'react-router-dom';
-import { io } from "socket.io-client";
-import { useSnackbar } from "../SnackbarContext/SnackbarContext";  // Importar el hook
 
 import axios from 'axios';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -354,13 +352,9 @@ const Data = () => {
 
   // --------   principal   -------
   return (
-    <div className='texfields-containers' style={{ width: '100%' }}>
+    <div style={{ width: '100%' }}>
       <ThemeProvider theme={customTheme(outerTheme)}>
         <div>
-          <div className="title">
-            <h1></h1>
-          </div>
-
           <div className="content-container">
             <Grid container className='grid' >
               <Grid item>

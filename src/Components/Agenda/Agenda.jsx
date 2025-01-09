@@ -14,7 +14,7 @@ import {
     Button,
 } from "@mui/material";
 import { ThemeProvider, useTheme } from "@mui/material/styles";
-import { customTheme } from "../Datadisplay/Datadisplayoptions";
+import { customTheme } from '../CustomTheme/CustomTheme';
 import { useNavigate } from 'react-router-dom';
 import ModalAgenda from "../Agenda/ModalAgenda";
 import ModalAgendaEdit from "../Agenda/ModaAgendaEdit";

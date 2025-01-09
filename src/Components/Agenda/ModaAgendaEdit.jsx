@@ -74,7 +74,7 @@ const ModalAgendaEdit = ({ open, handleClose, editData }) => {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: 400,
+                        width: 700,
                         bgcolor: 'background.paper',
                         border: '2px solid #000',
                         boxShadow: 24,
@@ -85,6 +85,8 @@ const ModalAgendaEdit = ({ open, handleClose, editData }) => {
                         label="Nombre del titular"
                         variant="outlined"
                         fullWidth
+                        multiline
+                        rows={2}
                         value={personName}
                         onChange={(e) => setPersonName(e.target.value)}
                         sx={{ marginBottom: 2 }}
@@ -93,8 +95,20 @@ const ModalAgendaEdit = ({ open, handleClose, editData }) => {
                         label="Cargo"
                         variant="outlined"
                         fullWidth
+                        multiline
+                        rows={3}
                         value={personPosition}
                         onChange={(e) => setPersonPosition(e.target.value)}
+                        sx={{ marginBottom: 2 }}
+                    />
+                    <TextField
+                        label="Dirección"
+                        variant="outlined"
+                        multiline
+                        rows={3}
+                        fullWidth
+                        value={institutionAddress}
+                        onChange={(e) => setInstitutionAddress(e.target.value)}
                         sx={{ marginBottom: 2 }}
                     />
                     <TextField
@@ -103,14 +117,6 @@ const ModalAgendaEdit = ({ open, handleClose, editData }) => {
                         fullWidth
                         value={institutionPhone}
                         onChange={(e) => setInstitutionPhone(e.target.value)}
-                        sx={{ marginBottom: 2 }}
-                    />
-                    <TextField
-                        label="Dirección"
-                        variant="outlined"
-                        fullWidth
-                        value={institutionAddress}
-                        onChange={(e) => setInstitutionAddress(e.target.value)}
                         sx={{ marginBottom: 2 }}
                     />
                     <TextField

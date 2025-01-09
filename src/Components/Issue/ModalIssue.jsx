@@ -108,7 +108,6 @@ const ModalIssue = ({ open, handleClose }) => {
                         p: 4,
                     }}
                 >
-                    <h2 id="modal-title">Nuevo Tema</h2>
                     <TextField
                         id="outlined-basic"
                         label="Descripción del Tema"

@@ -108,7 +108,6 @@ const ModalInstitution = ({ open, handleClose }) => {
                         p: 4,
                     }}
                 >
-                    <h2 id="modal-title">Nueva Institución</h2>
                     <TextField
                         id="outlined-basic"
                         label="Nombre de la Institución"

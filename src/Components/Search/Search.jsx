@@ -6,7 +6,7 @@ import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { useSearch } from '../../SearchContext';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { customTheme } from './Searchoptions';
+import { customTheme } from '../CustomTheme/CustomTheme';
 
 import flechaDer from '../../assets/f-der.png';
 import flechaizq from '../../assets/f-izq.png';
@@ -80,9 +80,6 @@ const Search = () => {
             <ThemeProvider theme={customTheme(outerTheme)}>
                 {Array.isArray(data) && data.length > 0 ? (
                     <div className="content-container">
-                        <div className="title">
-                            <h1>Registros</h1> <br />
-                        </div>
                         <Grid container className='grid'>
                             <Grid item>
                                 <Box component="section"

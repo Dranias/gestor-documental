@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
-import { customTheme } from './Datadisplayoptions';
+import { customTheme } from '../CustomTheme/CustomTheme';
 
 import axios from 'axios';
 import flechaDer from '../../assets/f-der.png';

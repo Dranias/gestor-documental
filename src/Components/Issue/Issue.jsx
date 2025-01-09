@@ -6,7 +6,7 @@ import ModalIssue from "../Issue/ModalIssue";
 
 import { Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
 import { ThemeProvider, useTheme } from "@mui/material/styles";
-import { customTheme } from "../Datadisplay/Datadisplayoptions";
+import { customTheme } from '../CustomTheme/CustomTheme';
 
 const Issue = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);

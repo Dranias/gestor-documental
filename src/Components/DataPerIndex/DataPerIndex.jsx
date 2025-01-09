@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
-import { customTheme } from './DataPerIndexoptions';
+import { customTheme } from '../CustomTheme/CustomTheme';
 
 import flechaDer from '../../assets/f-der.png';
 import flechaizq from '../../assets/f-izq.png';
@@ -112,9 +112,6 @@ const DataPerIndex = () => {
             <ThemeProvider theme={customTheme(outerTheme)}>
                 {Array.isArray(data) && data.length > 0 ? (
                     <div className="content-container">
-                        <div className="title">
-                            <h1>Registros</h1> <br />
-                        </div>
                         <Grid container className='grid'>
                             <Grid item>
                                 <Box component="section"
