@@ -124,7 +124,7 @@ const Data = () => {
       <div key={sections.length} style={{ display: 'flex', alignItems: 'center' }}>
         <TextField
           id={`outlined-basic-${sections.length}`}
-          label="OPG"
+          label="OPE"
           variant="outlined"
           style={{
             width: '10%',
@@ -494,7 +494,7 @@ const Data = () => {
 
           <div className='container-opg' >
             <Box component="section"
-              style={{ width: '75%' }}
+              style={{ width: '91.5%' }}
               sx={{
                 p: 2, border: 1,
                 bgcolor: 'primary.nofocus',

@@ -35,7 +35,6 @@ body {
 
 .container-opg {
     position: relative;
-    width: 100%;
     margin: 10px auto;
     display: flex;
     flex-direction: row;
