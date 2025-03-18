@@ -101,7 +101,7 @@ const ModalIssue = ({ open, handleClose }) => {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: 400,
+                        width: 600,
                         bgcolor: 'background.paper',
                         border: '2px solid #000',
                         boxShadow: 24,
@@ -112,6 +112,8 @@ const ModalIssue = ({ open, handleClose }) => {
                         id="outlined-basic"
                         label="Descripción del Tema"
                         variant="outlined"
+                        multiline
+                        rows={3}
                         style={{
                             width: "100%",
                             borderColor: textareaError ? 'red' : '#ccc', // Cambiar el color del borde en caso de error

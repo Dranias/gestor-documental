@@ -77,10 +77,22 @@ const UpdateData = () => {
                     throw new Error(`Error fetching data: ${response.statusText}`);
                 }
                 const jsonData = await response.json();
+                console.log('Response JSON:', jsonData); // Para depuración
+
                 setData(jsonData.data);
                 setFolioValue(jsonData.data.folio);
                 settimeValue(jsonData.data.time);
-                setSelectedDate(dayjs(jsonData.data.fecha));
+
+                // Asegurar que la fecha se interpreta correctamente
+                if (jsonData.data.date) {
+                    const parsedDate = dayjs(jsonData.data.date);
+                    if (parsedDate.isValid()) {
+                        setSelectedDate(parsedDate);
+                    } else {
+                        console.error("Fecha no válida:", jsonData.data.date);
+                    }
+                }
+
                 setSelectedissue(jsonData.data.issue);
                 setNameValue(jsonData.data.name);
                 setTextareaContent(jsonData.data.description);
@@ -88,44 +100,30 @@ const UpdateData = () => {
                 setTextareaObs(jsonData.data.notes || "");
                 setOpgId(jsonData.data.id);
 
-                // Iterar sobre data.docNumber y data.institution
+                // Procesar docNumber
                 jsonData.data.docNumber.forEach((num, index) => {
                     setOPGs(prevOPGs => {
                         const updatedOPGs = [...prevOPGs];
                         if (index >= updatedOPGs.length) {
-                            updatedOPGs.push(...Array(index - updatedOPGs.length + 1).fill(''));
+                            updatedOPGs.push('');
                         }
                         updatedOPGs[index] = num;
                         return updatedOPGs;
                     });
-
-                    setData(prevData => {
-                        const newData = { ...prevData };
-                        newData.docNumber = newData.docNumber.map((numb, i) => (i === index ? num : numb));
-                        setOPGs(newData.docNumber); // Actualiza OPGs con los nuevos valores
-                        return newData;
-                    });
-
                 });
 
+                // Procesar institution
                 jsonData.data.institution.forEach((institution, index) => {
                     setDependenciesarray(prevdependenciesarray => {
-                        const updateddependenciesarray = [...prevdependenciesarray];
-                        if (index >= updateddependenciesarray.length) {
-                            updateddependenciesarray.push(...Array(index - updateddependenciesarray.length + 1).fill(''));
+                        const updatedDependencies = [...prevdependenciesarray];
+                        if (index >= updatedDependencies.length) {
+                            updatedDependencies.push('');
                         }
-                        updateddependenciesarray[index] = institution;
-                        return updateddependenciesarray.filter(dep => dep !== null);
+                        updatedDependencies[index] = institution;
+                        return updatedDependencies.filter(dep => dep !== null);
                     });
-
-                    setData(prevData => {
-                        const newData = { ...prevData };
-                        newData.institution[index] = institution;
-                        setDependenciesarray(newData.institution.filter(dep => dep !== null)); // Actualiza dependenciesarray con los nuevos valores
-                        return newData;
-                    });
-
                 });
+
             } catch (error) {
                 console.error('Error:', error);
             } finally {

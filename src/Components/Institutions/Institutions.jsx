@@ -8,7 +8,6 @@ import ModalInstitution from '../Institutions/ModalInstitution';
 import { Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import { customTheme } from '../CustomTheme/CustomTheme';
-import { useSnackbar } from "../SnackbarContext/SnackbarContext";  // Importar el hook
 
 const Institutions = ({ deleteRow, editRow }) => {
     const [data, setData] = useState([]);
@@ -16,9 +15,6 @@ const Institutions = ({ deleteRow, editRow }) => {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
     const outerTheme = useTheme();
-
-    // Usar el hook de Snackbar
-    const { showSnackbar } = useSnackbar();  // Llamar a la función de Snackbar
 
     useEffect(() => {
         const fetchData = async () => {

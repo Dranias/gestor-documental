@@ -18,8 +18,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: rgb(195, 185, 159);
-  background: linear-gradient(90deg, rgba(195, 185, 159, 1) 0%, rgba(205, 194, 165, 1) 48%, rgba(181, 167, 132, 1) 100%);
+  background: rgb(250, 249, 245);
   display: flex;
   justify-content: center;
   padding: 5px;

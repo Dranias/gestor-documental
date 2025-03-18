@@ -354,7 +354,7 @@ const Data = () => {
   return (
     <div style={{ width: '100%' }}>
       <ThemeProvider theme={customTheme(outerTheme)}>
-        <div>
+        <div className="main-body">
           <div className="content-container">
             <Grid container className='grid' >
               <Grid item>
@@ -490,8 +490,6 @@ const Data = () => {
             </Box>
           </div>
 
-          <br />
-
           <div className='container-opg' >
             <Box component="section"
               style={{ width: '91.5%' }}
@@ -512,7 +510,6 @@ const Data = () => {
             </Box>
           </div>
 
-          <br />
           <Box className="text-containers" style={{ width: '100%' }}>
             <div className="container-issue">
               <Box component="section"
@@ -611,14 +608,9 @@ const Data = () => {
                 </AccordionDetails>
               </Accordion>
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
           </Box>
         </div>
-
+        
         <div className="footer">
           <button className="button" style={{ backgroundColor: '#095240', fontSize: '20px', color: 'white' }} onClick={handleSendData}>
             Registrar

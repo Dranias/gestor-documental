@@ -9,7 +9,6 @@
 .container {
     width: 100vw;
     min-width: 100vh;
-    background: rgb(175, 170, 157);
-    background: linear-gradient(90deg, rgba(175, 170, 157, 1) 0%, rgba(201, 187, 150, 1) 48%, rgba(219, 196, 135, 1) 100%);
+    background: rgb(250, 249, 245);
     transition: 0.5s;
 }

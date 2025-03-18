@@ -48,9 +48,9 @@ export const customTheme = (outerTheme) =>
   createTheme({
     palette: {
       primary: {
-        main: '#d6d1C4',
-        nofocus: '#cfcbc2',
-        dark: '#c7bb9b',
+        main: '#b9d132',
+        nofocus: '#e5e6e1', //color fijo
+        dark: '#e9edf2', //color con mouseover
       },
       mode: outerTheme.palette.mode,
     },
@@ -58,9 +58,9 @@ export const customTheme = (outerTheme) =>
       MuiTextField: {
         styleOverrides: {
           root: {
-            '--TextField-brandBorderColor': '#9e2f5f',
-            '--TextField-brandBorderHoverColor': '#8c2b55',
-            '--TextField-brandBorderFocusedColor': '#9e2f5f',
+            '--TextField-brandBorderColor': '#000000', //color de líneas - fijo
+            '--TextField-brandBorderHoverColor': '#2a2b29',
+            '--TextField-brandBorderFocusedColor': '#4782d6',
             '& label.Mui-focused': {
               color: 'var(--TextField-brandBorderFocusedColor)',
             },

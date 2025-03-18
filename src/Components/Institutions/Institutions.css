@@ -1,5 +1,6 @@
 .table-wrapper {
     width: 100%;
+    background: rgb(212, 209, 197);
   }
   
   .table {
@@ -71,30 +72,3 @@
   .delete-btn {
     color: #e10d05;
   }
-
-  .search-box {
-    display: flex;
-    align-items: center;
-    background: #e4e4e4;
-    padding: 10px 20px;
-    border-radius: 50px;
-}
-
-.search-box input {
-    padding: 6px;
-    background: transparent;
-    border: 0;
-    outline: 0;
-    color: #fff;
-    font-size: 18px;
-    max-width: 200px;
-}
-
-.search-box::placeholder {
-    color: #fff;
-}
-
-.search-box img {
-    width: 20px;
-    cursor: pointer;
-}

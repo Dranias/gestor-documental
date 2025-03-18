@@ -4,7 +4,7 @@ export const customTheme = (outerTheme) =>
   createTheme({
     palette: {
         primary: {
-          main: '#d6d1C4',
+          main: '#f2f0e9',
           nofocus: '#cfcbc2',
           dark: '#9c937c',
         },
