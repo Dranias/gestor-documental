@@ -14,6 +14,7 @@ import Institutions from './Components/Institutions/Institutions';
 import Invitations from './Components/Invitations/InvitationsList';
 import Issue from './Components/Issue/Issue';
 import Agenda from './Components/Agenda/Agenda';
+import Audiences from './Components/Audiences/Audiences';
 import Alerts from './Components/Alerts/Alerts';
 
 import { SnackbarProvider, useSnackbar } from './Components/SnackbarContext/SnackbarContext';
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/invitations" element={<Invitations />} />
             <Route path="/issue" element={<Issue />} />
             <Route path="/agenda" element={<Agenda />} />
+            <Route path="/audiences" element={<Audiences />} />
           </Routes>
           <SnackbarGlobal />
         </div>

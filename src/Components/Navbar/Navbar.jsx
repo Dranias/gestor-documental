@@ -1,7 +1,6 @@
 import './Navbar.css';
 import Tooltip from '@mui/material/Tooltip';
 import search_icon_light from '../../assets/search-w.png';
-import gobierno_presente from '../../assets/gobierno-presente.png';
 import home_icon from '../../assets/home.png';
 import axios from 'axios';
 import Menu from '@mui/material/Menu';
@@ -86,6 +85,11 @@ const Navbar = () => {
                 <Link to="/checklist" style={{ textDecoration: 'none' }}>
                     <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
                         Lista
+                    </Button>
+                </Link>
+                <Link to="/audiences" style={{ textDecoration: 'none' }}>
+                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
+                        Audiencias
                     </Button>
                 </Link>
                 <Link to="/agenda" style={{ textDecoration: 'none' }}>
