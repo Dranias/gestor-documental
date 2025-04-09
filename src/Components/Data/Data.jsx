@@ -145,7 +145,7 @@ const Data = () => {
             handleDependenciaChange(contador, newValue);
           }}
         />
-        <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#691C32', color: 'white' }}>+</Button>
+        <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#4782d6', color: 'white' }}>+</Button>
         {sections.length > 0 && (
           <Button variant='contained' onClick={() => handleRemoveButtonClick(sections.length - 1)} style={{ backgroundColor: '#A6A6A8', color: 'white' }}>-</Button>
         )}
@@ -186,7 +186,7 @@ const Data = () => {
             handleDependenciaChange(0, newValue);
           }}
         />
-        <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#691C32', color: 'white', marginLeft: '10px' }}>+</Button>
+        <Button variant='contained' onClick={handleButtonClick} style={{ backgroundColor: '#4782d6', color: 'white', marginLeft: '10px' }}>+</Button>
       </div>
     ),
   ]);

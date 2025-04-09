@@ -2,6 +2,7 @@ import './Navbar.css';
 import Tooltip from '@mui/material/Tooltip';
 import search_icon_light from '../../assets/search-w.png';
 import gobierno_presente from '../../assets/gobierno-presente.png';
+import home_icon from '../../assets/home.png';
 import axios from 'axios';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem'
@@ -60,28 +61,35 @@ const Navbar = () => {
     return (
         <div className='navbar'>
 
-            <button onClick={goToMain}>
-                <img src={gobierno_presente} alt="" className='logo' />
+            <button
+                onClick={goToMain}
+                style={{
+                    background: 'transparent',
+                    border: 'none',
+                    padding: '5px',
+                    cursor: 'pointer'
+                }}>
+                <img src={home_icon} alt="" style={{ width: '60px', height: '60px' }} />
             </button>
 
             <div className='buttons-container'>
                 <Link to="/data" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}>
+                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
                         Captura
                     </Button>
                 </Link>
                 <Link to="/datadisplay" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}>
+                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
                         Ficha
                     </Button>
                 </Link>
                 <Link to="/checklist" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}>
+                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
                         Lista
                     </Button>
                 </Link>
                 <Link to="/agenda" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}>
+                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
                         Agenda
                     </Button>
                 </Link>
@@ -89,7 +97,7 @@ const Navbar = () => {
                 <div>
                     <Button
                         variant="contained" color="inherit"
-                        style={{ width: '100%', backgroundColor: '#691C32', fontSize: '1em', color: 'white' }}
+                        style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}
                         onClick={handleClick}
                     >
                         Datos
@@ -126,13 +134,13 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <div className='search-box' style={{ backgroundColor: '#691C32', padding: '10px 20px', borderRadius: '50px', display: 'flex', alignItems: 'center' }}>
+            <div className='search-box' style={{ backgroundColor: '#97b8e6', padding: '10px 20px', borderRadius: '50px', display: 'flex', alignItems: 'center' }}>
                 <Tooltip title={"Busqueda por nombre o número de OPE"} placement="top">
                     <input
                         type="text"
                         placeholder='Buscar'
                         onChange={(e) => handleSearch(e.target.value)}
-                        style={{ backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'white', fontSize: '18px', maxWidth: '200px' }}
+                        style={{ backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'black', fontSize: '18px', maxWidth: '200px' }}
                     />
                 </Tooltip>
                 <img src={search_icon_light} alt="" />
