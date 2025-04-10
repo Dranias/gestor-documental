@@ -200,7 +200,7 @@ const Search = () => {
                                                             <TextField
                                                                 InputProps={{ readOnly: true }}
                                                                 id="standard-basic"
-                                                                label="OPG"
+                                                                label="OPE"
                                                                 variant="outlined"
                                                                 style={{ width: "8%" }}
                                                                 value={doc}
@@ -223,7 +223,7 @@ const Search = () => {
                                         </div>
                                     ) : (
                                         <div style={{ textAlign: 'center' }}>
-                                            <p className="bigText">OPG/{data[currentIndex].docNumber}/2024: {data[currentIndex].institution}</p>
+                                            <p className="bigText">OPE/{data[currentIndex].docNumber}/2024: {data[currentIndex].institution}</p>
                                         </div>
                                     )}
                                 </Box>

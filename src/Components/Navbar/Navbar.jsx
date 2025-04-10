@@ -4,13 +4,12 @@ import search_icon_light from '../../assets/search-w.png';
 import home_icon from '../../assets/home.png';
 import axios from 'axios';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem'
+import MenuItem from '@mui/material/MenuItem';
 import EditActorsModal from '../Actors/EditActorsModal';
 
 import React, { useState, useRef } from 'react';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSearch } from '../../SearchContext';
 import { useSnackbar } from '../../Components/SnackbarContext/SnackbarContext';
 
@@ -18,24 +17,22 @@ const apiUrl = import.meta.env.VITE_REACT_APP_GESTOR_APP_SEARCH;
 
 const Navbar = () => {
     const [isActorsModalOpen, setIsActorsModalOpen] = useState(false);
-    const modalRef = useRef(null); // Para hacer referencia al modal
+    const modalRef = useRef(null);
 
     const openActorsModal = () => setIsActorsModalOpen(true);
     const closeActorsModal = () => setIsActorsModalOpen(false);
 
     const { setSearchResults } = useSearch();
-    const navigate = useNavigate();
-    const [currentIndex, setCurrentIndex] = useState(null);
-
-    // Obtener las funciones del contexto
     const { showSnackbar } = useSnackbar();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
 
     const goToMain = () => {
         navigate('/');
     };
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -48,14 +45,31 @@ const Navbar = () => {
         try {
             const fullUrl = `${apiUrl}/?query=${query}`;
             const response = await axios.get(fullUrl);
-            const searchData = response.data;
-            setSearchResults(searchData);
-            setCurrentIndex(null);
+            setSearchResults(response.data);
             navigate('/searchdata');
         } catch (error) {
             console.error('Error al realizar la búsqueda:', error);
         }
     };
+
+    const isActive = (path) => location.pathname === path;
+
+    const NavButton = ({ to, label }) => (
+        <Link to={to} style={{ textDecoration: 'none' }}>
+            <Button
+                variant="contained"
+                color="inherit"
+                style={{
+                    width: '100%',
+                    backgroundColor: isActive(to) ? '#2c41a0' : '#4782d6',
+                    fontSize: '1em',
+                    color: 'white'
+                }}
+            >
+                {label}
+            </Button>
+        </Link>
+    );
 
     return (
         <div className='navbar'>
@@ -67,41 +81,28 @@ const Navbar = () => {
                     border: 'none',
                     padding: '5px',
                     cursor: 'pointer'
-                }}>
-                <img src={home_icon} alt="" style={{ width: '60px', height: '60px' }} />
+                }}
+            >
+                <img src={home_icon} alt="Inicio" style={{ width: '60px', height: '60px' }} />
             </button>
 
             <div className='buttons-container'>
-                <Link to="/data" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
-                        Captura
-                    </Button>
-                </Link>
-                <Link to="/datadisplay" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
-                        Ficha
-                    </Button>
-                </Link>
-                <Link to="/checklist" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
-                        Lista
-                    </Button>
-                </Link>
-                <Link to="/audiences" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
-                        Audiencias
-                    </Button>
-                </Link>
-                <Link to="/agenda" style={{ textDecoration: 'none' }}>
-                    <Button variant="contained" color="inherit" style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}>
-                        Agenda
-                    </Button>
-                </Link>
+                <NavButton to="/data" label="Captura" />
+                <NavButton to="/datadisplay" label="Ficha" />
+                <NavButton to="/checklist" label="Lista" />
+                <NavButton to="/audiences" label="Audiencias" />
+                <NavButton to="/agenda" label="Agenda" />
 
                 <div>
                     <Button
-                        variant="contained" color="inherit"
-                        style={{ width: '100%', backgroundColor: '#4782d6', fontSize: '1em', color: 'white' }}
+                        variant="contained"
+                        color="inherit"
+                        style={{
+                            width: '100%',
+                            backgroundColor: isActive('/institutions') || isActive('/issue') ? '#2c5aa0' : '#4782d6',
+                            fontSize: '1em',
+                            color: 'white'
+                        }}
                         onClick={handleClick}
                     >
                         Datos
@@ -125,36 +126,39 @@ const Navbar = () => {
 
                         <MenuItem
                             onClick={(e) => {
-                                {/* Evitar que el modal se cierre automáticamente. Esto solucinó un error que al abrir el modal y cambiar entre 
-                                    texfields con tabulador, se cerrará*/}
-                                e.stopPropagation(); // Detener la propagación para evitar que el menú se cierre
-                                openActorsModal();  // Abrir el modal
+                                e.stopPropagation();
+                                openActorsModal();
                             }}
                         >
                             Colaboradores
                         </MenuItem>
-
                     </Menu>
                 </div>
             </div>
 
             <div className='search-box' style={{ backgroundColor: '#97b8e6', padding: '10px 20px', borderRadius: '50px', display: 'flex', alignItems: 'center' }}>
-                <Tooltip title={"Busqueda por nombre o número de OPE"} placement="top">
+                <Tooltip title={"Búsqueda por nombre o número de OPE"} placement="top">
                     <input
                         type="text"
                         placeholder='Buscar'
                         onChange={(e) => handleSearch(e.target.value)}
-                        style={{ backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'black', fontSize: '18px', maxWidth: '200px' }}
+                        style={{
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            outline: 'none',
+                            color: 'black',
+                            fontSize: '18px',
+                            maxWidth: '200px'
+                        }}
                     />
                 </Tooltip>
-                <img src={search_icon_light} alt="" />
+                <img src={search_icon_light} alt="Buscar" />
             </div>
 
-            {/* Modal de Edición */}
             <EditActorsModal
                 open={isActorsModalOpen}
                 onClose={closeActorsModal}
-                modalRef={modalRef} // Enviar la referencia al modal
+                modalRef={modalRef}
             />
         </div>
     );

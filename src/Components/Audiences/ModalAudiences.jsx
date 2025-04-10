@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 
 const ModalAudiences = ({ open, onClose, onSubmit, initialData }) => {
     const [newAudience, setNewAudience] = useState({
-        date: new Date(),
+        date: dayjs(),
         name: "",
         position: "",
         description: "",
@@ -31,11 +31,11 @@ const ModalAudiences = ({ open, onClose, onSubmit, initialData }) => {
         if (initialData) {
             setNewAudience({
                 ...initialData,
-                date: new Date(initialData.date),
+                date: dayjs(initialData.date),
             });
-            setSelectedDate(dayjs(initialData.date)); 
+            setSelectedDate(dayjs(initialData.date));
         } else {
-            const now = new Date();
+            const now = dayjs();
             setNewAudience({
                 date: now,
                 name: "",
@@ -43,7 +43,7 @@ const ModalAudiences = ({ open, onClose, onSubmit, initialData }) => {
                 description: "",
                 priority: false,
             });
-            setSelectedDate(dayjs(now));
+            setSelectedDate(now);
         }
     }, [initialData, open]);
 
@@ -59,7 +59,7 @@ const ModalAudiences = ({ open, onClose, onSubmit, initialData }) => {
     const handleSubmit = () => {
         const audienceWithFormattedDate = {
             ...newAudience,
-            date: selectedDate.toDate(), // Convertir de dayjs a Date para el backend
+            date: selectedDate.toISOString(),
         };
         onSubmit(audienceWithFormattedDate);
     };
@@ -73,9 +73,7 @@ const ModalAudiences = ({ open, onClose, onSubmit, initialData }) => {
                         <DatePicker
                             label="Fecha"
                             value={selectedDate}
-                            onChange={(newValue) => {
-                                setSelectedDate(newValue);
-                            }}
+                            onChange={(newValue) => setSelectedDate(newValue)} // Mantener la fecha seleccionada
                             slotProps={{ textField: { variant: 'outlined' } }}
                         />
                     </DemoContainer>

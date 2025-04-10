@@ -49,6 +49,7 @@ const Audiences = () => {
 
     // Función para abrir el modal para agregar o editar audiencias
     const handleOpenModal = (row = null) => {
+        console.log(row)
         setEditData(row);
         setOpenModal(true);
     };
@@ -125,8 +126,8 @@ const Audiences = () => {
                             <th>Folio</th>
                             <th className="nombre">Nombre</th>
                             <th className="cargo">Cargo</th>
-                            <th className="descripcion">Descripción</th>
                             <th className="fecha">Fecha</th>
+                            <th className="descripcion">Descripción</th>
                             <th>Prioritaria</th>
                             <th>Acciones</th>
                         </tr>
@@ -138,8 +139,8 @@ const Audiences = () => {
                                     <td>{row.folio}</td>
                                     <td className="nombre">{row.name}</td>
                                     <td className="cargo">{row.position}</td>
+                                    <td>{new Date(row.date).toLocaleDateString("es-ES", { timeZone: "UTC" })}</td>
                                     <td className="descripcion">{row.description}</td>
-                                    <td>{row.date}</td>
                                     <td>{row.priority ? "Sí" : "No"}</td>
                                     <td className="fit">
                                         <span className="actions">
