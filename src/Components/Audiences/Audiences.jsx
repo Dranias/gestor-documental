@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import trash from "../../assets/trash.png";
 import edit from "../../assets/edit.png";
-import print from "../../assets/imprimir.png"
 import Box from "@mui/material/Box";
 import { Grid, ThemeProvider, useTheme } from "@mui/material";
 import { customTheme } from "../CustomTheme/CustomTheme";
